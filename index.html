@@ -3,144 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITAN v6.2 | The Hierarchy Valuation Engine</title>
+    <title>TITAN v7.0 | The Ultimate Hardware Matrix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #22c55e; --accent: #a855f7; }
-        body { background: #010103; color: white; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
-        .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(168, 85, 247, 0.12) 0%, transparent 45%), radial-gradient(circle at 90% 90%, rgba(34, 197, 94, 0.1) 0%, transparent 45%); }
-        .glass { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(60px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; }
-        .input-glass { background: #08080c !important; border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff !important; padding: 12px; border-radius: 15px; width: 100%; outline: none; font-size: 12px; appearance: none; cursor: pointer; }
-        select option { background-color: #08080c; color: white; }
-        .price-text { font-family: 'Orbitron', sans-serif; background: linear-gradient(to bottom, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.4)); }
-        .mode-tab { cursor: pointer; padding: 12px 18px; border-radius: 15px; transition: 0.4s; color: #555; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid transparent; text-align: center; }
-        .mode-tab.active { background: rgba(255,255,255,0.08); color: white; border-color: rgba(255,255,255,0.15); }
-        .titan-btn { background: white; color: black; font-weight: 900; transition: 0.4s; }
-        .titan-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,255,255,0.2); }
+        body { background: #020205; color: white; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        
+        /* Animated Cyber Background */
+        .cyber-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: linear-gradient(135deg, #050505 0%, #0d0d1a 100%);
+        }
+        .glow-sphere {
+            position: absolute; width: 400px; height: 400px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+            filter: blur(60px); animation: float 10s infinite alternate;
+        }
+
+        @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(100px, 50px); } }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .nav-tab {
+            cursor: pointer; padding: 12px 20px; border-radius: 20px; transition: 0.4s;
+            font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #666;
+        }
+        .nav-tab.active { background: white; color: black; transform: scale(1.05); }
+
+        .input-box {
+            background: #0a0a12 !important; border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white; padding: 15px; border-radius: 20px; width: 100%; outline: none; appearance: none;
+        }
+        .input-box:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
+
+        .price-display {
+            font-family: 'Orbitron', sans-serif; background: linear-gradient(to bottom, #fff, var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .matrix-btn {
+            background: linear-gradient(45deg, #fff, #e2e8f0); color: black; font-weight: 900;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .matrix-btn:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(255,255,255,0.2); }
     </style>
 </head>
-<body class="pb-20">
-    <div class="mesh-bg"></div>
+<body class="min-h-screen">
+    <div class="cyber-bg">
+        <div class="glow-sphere" style="top: 10%; left: 5%;"></div>
+        <div class="glow-sphere" style="bottom: 10%; right: 5%; background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);"></div>
+    </div>
 
-    <!-- Navigation -->
-    <nav class="w-full max-w-6xl mx-auto p-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="text-3xl font-black tracking-tighter uppercase italic">Titan <span class="text-green-500">v6.2</span></div>
-        <div class="flex glass p-1 gap-1 w-full md:w-auto">
-            <div onclick="setMode('phone')" id="tab-phone" class="mode-tab active flex-1">Mobile</div>
-            <div onclick="setMode('laptop')" id="tab-laptop" class="mode-tab flex-1">Laptop</div>
-            <div onclick="setMode('pc')" id="tab-pc" class="mode-tab flex-1">Desktop</div>
+    <!-- Google Ad Header -->
+    <div class="w-full flex justify-center p-4">
+        <div class="max-w-4xl w-full h-24 glass-card flex items-center justify-center text-[10px] text-gray-700 uppercase tracking-[0.5em]">
+            AdSense Leaderboard Placeholder
         </div>
-    </nav>
+    </div>
 
-    <!-- Main Content -->
-    <main class="w-full max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 mt-4">
+    <header class="max-w-6xl mx-auto p-10 text-center">
+        <h1 class="text-5xl font-black italic tracking-tighter mb-8 uppercase">Titan <span class="text-green-500">v7.0</span></h1>
         
-        <!-- Selection Form -->
-        <div class="lg:col-span-5 space-y-6">
-            <div class="glass p-8 shadow-2xl">
-                <h2 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] mb-8 italic text-center">Hardware Identity</h2>
-                
-                <div class="space-y-4">
-                    <!-- Brand Level -->
-                    <div>
-                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-1 block ml-2">Manufacturer / Brand</label>
-                        <select id="brand-select" class="input-glass" onchange="updateSeries()"></select>
-                    </div>
+        <!-- Main Navigation -->
+        <div class="flex flex-wrap justify-center glass-card p-2 gap-2 mx-auto inline-flex">
+            <div onclick="setMode('phone')" id="tab-phone" class="nav-tab active">Mobile</div>
+            <div onclick="setMode('laptop')" id="tab-laptop" class="nav-tab">Laptop</div>
+            <div onclick="setMode('pc')" id="tab-pc" class="nav-tab">Full PC</div>
+            <div onclick="setMode('cpu')" id="tab-cpu" class="nav-tab">Standalone CPU</div>
+            <div onclick="setMode('gpu')" id="tab-gpu" class="nav-tab">Standalone GPU</div>
+        </div>
+    </header>
 
-                    <!-- Series Level -->
-                    <div>
-                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-1 block ml-2">Series / Generation</label>
-                        <select id="series-select" class="input-glass" onchange="updateModels()"></select>
-                    </div>
+    <main class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10">
+        
+        <!-- Section 1: Data Entry -->
+        <div class="lg:col-span-5">
+            <div class="glass-card p-10 space-y-8">
+                <div class="flex items-center gap-4 border-b border-white/5 pb-6">
+                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <h2 class="text-xs font-black uppercase tracking-[0.3em] text-gray-500" id="mode-title">Mobile Configuration</h2>
+                </div>
 
-                    <!-- Model Level -->
+                <div class="space-y-6">
                     <div>
-                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-1 block ml-2">Specific Model</label>
-                        <select id="model-select" class="input-glass"></select>
+                        <label class="text-[9px] font-bold uppercase text-gray-500 ml-4 mb-2 block">Brand / Manufacturer</label>
+                        <select id="brand-select" class="input-box" onchange="updateSeries()"></select>
                     </div>
-
-                    <!-- Device Health -->
-                    <div class="pt-4 border-t border-white/5">
-                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-1 block ml-2">External Condition</label>
-                        <select id="condition" class="input-glass">
-                            <option value="1">Mint / New</option>
-                            <option value="0.9">Excellent</option>
-                            <option value="0.7">Used / Worn</option>
-                            <option value="0.4">Damaged</option>
+                    <div>
+                        <label class="text-[9px] font-bold uppercase text-gray-500 ml-4 mb-2 block">Generation / Series</label>
+                        <select id="series-select" class="input-box" onchange="updateModels()"></select>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-bold uppercase text-gray-500 ml-4 mb-2 block">Specific Model</label>
+                        <select id="model-select" class="input-box"></select>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-bold uppercase text-gray-500 ml-4 mb-2 block">Condition Status</label>
+                        <select id="condition" class="input-box">
+                            <option value="1">Brand New / Sealed</option>
+                            <option value="0.9">Excellent (Like New)</option>
+                            <option value="0.7">Normal Used</option>
+                            <option value="0.4">Damaged / Cracked</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Analysis & Price -->
+        <!-- Section 2: Gauge & Result -->
         <div class="lg:col-span-7 space-y-8">
-            <div class="glass p-12 text-center relative overflow-hidden group">
-                <div class="mb-4 text-[10px] text-gray-500 uppercase tracking-widest font-black">Titan Integrity Score</div>
-                <div id="score-val" class="text-9xl font-black font-mono tracking-tighter mb-8">0</div>
-                <button onclick="runAudit()" id="run-btn" class="titan-btn w-full py-6 rounded-2xl text-lg uppercase tracking-widest">Execute AI Audit</button>
-                <div id="status-msg" class="mt-4 text-[10px] text-gray-600 font-bold uppercase tracking-widest italic">Awaiting Stress Signal...</div>
+            <div class="glass-card p-12 text-center relative overflow-hidden">
+                <div class="text-[10px] font-black uppercase tracking-widest text-gray-600 mb-6">Hardware Stress Integrity</div>
+                <div id="score-text" class="text-9xl font-black font-mono tracking-tighter mb-10">0</div>
+                <button onclick="runBenchmark()" id="run-btn" class="matrix-btn w-full py-6 rounded-[20px] text-lg uppercase tracking-widest shadow-xl">Initiate Matrix Scan</button>
+                <div id="status" class="mt-6 text-[9px] text-gray-600 font-bold uppercase tracking-[0.3em]">System Standby</div>
             </div>
 
-            <div class="glass p-10 min-h-[250px] flex flex-col items-center justify-center relative">
-                <p class="text-[10px] text-gray-500 font-black uppercase tracking-[0.5em] mb-4">Final Valuation Index</p>
-                <div id="price-val" class="price-text text-7xl md:text-8xl font-black tracking-tighter">$0</div>
-                <div class="mt-8 text-[9px] text-gray-400 uppercase font-bold tracking-widest border border-white/10 px-8 py-2 rounded-full" id="val-id">TITAN-v6.2-CHRONOS</div>
+            <div class="glass-card p-12 min-h-[300px] flex flex-col items-center justify-center relative">
+                <div class="absolute top-8 left-8 text-[10px] font-black text-gray-800 uppercase italic">Titan Valuation Index</div>
+                <div id="price-val" class="price-display text-8xl md:text-9xl font-black tracking-tighter">$0</div>
+                <div class="mt-8 text-[9px] text-gray-500 font-bold border border-white/5 px-6 py-2 rounded-full uppercase tracking-widest" id="val-id">Report: ID_AWAITING_SCAN</div>
             </div>
         </div>
     </main>
 
+    <!-- Google Ad Footer -->
+    <div class="w-full flex justify-center p-10">
+        <div class="max-w-4xl w-full h-64 glass-card flex items-center justify-center text-[10px] text-gray-700 uppercase tracking-[0.5em]">
+            AdSense Responsive Square Placeholder
+        </div>
+    </div>
+
     <script>
-        // --- MASSIVE HIERARCHICAL DATABASE ---
+        // --- THE MASSIVE V7 HIERARCHY DATABASE ---
         const DB = {
             phone: {
-                Apple: {
-                    "15 Series": { "15 Pro Max": 1300, "15 Pro": 1100, "15 Plus": 900, "15": 800 },
-                    "14 Series": { "14 Pro Max": 900, "14 Pro": 800, "14": 650 },
-                    "13 Series": { "13 Pro Max": 750, "13 Pro": 650, "13": 550 },
-                    "Older": { "12 Pro": 450, "11 Pro": 350, "X / XS": 200, "Legacy (6/7/8)": 80 }
-                },
-                Samsung: {
-                    "S24 / S25 (Next Gen)": { "S25 Ultra (Pre)": 1300, "S24 Ultra": 1100, "S24+": 900 },
-                    "S22 / S23 Series": { "S23 Ultra": 850, "S23+": 650, "S22 Ultra": 550 },
-                    "Z Fold / Flip": { "Fold 5": 1100, "Flip 5": 600, "Fold 4": 800 },
-                    "Legacy S": { "S21 Ultra": 400, "S20 FE": 250, "S10 Plus": 150 }
-                },
-                Infinix: {
-                    "Zero Series": { "Zero 30 5G": 350, "Zero Ultra": 400, "Zero 5G 2023": 250 },
-                    "GT / Note Series": { "GT 10 Pro": 320, "Note 40 Pro": 300, "Note 30 VIP": 280 },
-                    "Hot / Smart": { "Hot 40 Pro": 180, "Hot 30": 140, "Smart 8": 100 }
-                },
-                Honor: {
-                    "Magic Series": { "Magic 6 Pro": 1000, "Magic 5 Pro": 750, "Magic V2 (Fold)": 1400 },
-                    "Number Series": { "Honor 90": 400, "Honor 70": 300, "Honor 50": 220 },
-                    "X Series": { "X9b": 280, "X8b": 220, "X7b": 180 }
-                }
+                Apple: { "iPhone 15 Series": { "15 Pro Max": 1300, "15 Pro": 1100, "15": 800 }, "iPhone 14 Series": { "14 Pro Max": 900, "14 Pro": 800 }, "Legacy": { "iPhone 12": 450, "iPhone 11": 320 } },
+                Samsung: { "S24 Series": { "S24 Ultra": 1200, "S24+": 1000 }, "Z Fold / Flip": { "Fold 5": 1100, "Flip 5": 650 }, "Older S": { "S21 Ultra": 420, "S20 FE": 250 } },
+                Honor: { "Magic Series": { "Magic 6 Pro": 1050, "Magic 5 Pro": 750 }, "X / Number": { "Honor 90": 400, "X9b": 280 } },
+                Infinix: { "Zero Series": { "Zero 30 5G": 350, "Zero Ultra": 400 }, "GT / Note": { "GT 10 Pro": 320, "Note 40 Pro": 300 } }
             },
             laptop: {
-                Apple: {
-                    "M3 / M4 (Next)": { "M4 Max (Pre)": 3500, "M3 Max": 3000, "M3 Pro": 2200 },
-                    "M1 / M2": { "M2 Max": 2400, "M2 Pro": 1800, "M1 Max": 1600, "M1 Air": 700 }
-                },
-                Nvidia_Laptop: {
-                    "RTX 40 Series": { "RTX 4090 Mobile": 2000, "RTX 4080 Mobile": 1500, "RTX 4060": 800 },
-                    "RTX 30 Series": { "RTX 3080 Ti": 1200, "RTX 3070": 900, "RTX 3050": 600 },
-                    "GTX Series": { "GTX 1660 Ti": 400, "GTX 1650": 300, "GTX 1050 Ti": 200, "GTX 830M / 940M": 80 }
-                }
+                MacBook: { "M3 Series": { "M3 Max": 3200, "M3 Pro": 2200 }, "M1 / M2": { "M2 Max": 2400, "M1 Air": 750 } },
+                Gaming_Laptops: { "RTX 40 Series": { "i9 + 4090": 3500, "i7 + 4070": 1800 }, "Legacy Gaming": { "GTX 1650": 600, "GTX 830M / 940M": 120 } }
             },
             pc: {
-                Intel_CPU: {
-                    "14th / 15th Gen": { "i9-14900K": 600, "i7-14700K": 400, "i5-14600K": 300 },
-                    "12th / 13th Gen": { "i9-13900K": 450, "i7-12700K": 280, "i5-12400F": 150 },
-                    "Classic (6th-11th)": { "i9-11900K": 300, "i7-10700K": 200, "i7-8700K": 120, "i7-6700K": 80 }
-                },
-                Nvidia_GPU: {
-                    "RTX 40 / 50 (Next)": { "RTX 5090 (Pre)": 2200, "RTX 4090": 1900, "RTX 4080": 1100 },
-                    "RTX 20 / 30 Series": { "RTX 3090": 850, "RTX 3080": 600, "RTX 2080 Ti": 400, "RTX 2060": 220 },
-                    "GTX Legacy": { "GTX 1080 Ti": 200, "GTX 1060": 120, "GTX 970": 80, "GTX 750 Ti": 50 }
-                }
+                High_End: { "Ultimate 2026": { "i9-15th + 5090": 4500, "i9-14th + 4090": 3500 }, "Workstation": { "Threadripper": 5000 } },
+                Mid_Range: { "Gaming Build": { "i5 + 4060": 1200, "Ryzen 7 + 3070": 1000 } }
+            },
+            cpu: {
+                Intel: { "14th Gen": { "i9-14900K": 590, "i7-14700K": 410 }, "12th / 13th Gen": { "i9-13900K": 480, "i5-12400F": 150 }, "Classic": { "i7-8700K": 120, "i7-4790K": 70 } },
+                AMD: { "Ryzen 7000": { "7950X3D": 650, "7800X3D": 450 }, "Ryzen 5000": { "5950X": 380, "5600X": 160 } }
+            },
+            gpu: {
+                Nvidia: { "RTX 40 / 50": { "RTX 5090 (Pre)": 2200, "RTX 4090": 1950, "RTX 4060": 320 }, "RTX 20 / 30": { "RTX 3080": 600, "RTX 2060": 220 }, "GTX": { "GTX 1080 Ti": 220, "GTX 830M / 960M": 60 } },
+                AMD_Radeon: { "RX 7000": { "7900 XTX": 950, "7800 XT": 520 }, "Classic": { "RX 580 8GB": 90, "R9 390": 70 } }
             }
         };
 
@@ -148,26 +173,29 @@
 
         function setMode(mode) {
             currentMode = mode;
-            document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById('tab-' + mode).classList.add('active');
+            document.getElementById('mode-title').innerText = mode.toUpperCase() + " CONFIGURATION";
+            
             initSelections();
+            gsap.from(".glass-card", { opacity: 0, y: 20, duration: 0.6, stagger: 0.1 });
         }
 
         function initSelections() {
-            const brandSelect = document.getElementById('brand-select');
-            brandSelect.innerHTML = "";
-            Object.keys(DB[currentMode]).forEach(brand => {
-                brandSelect.innerHTML += `<option value="${brand}">${brand.replace('_', ' ')}</option>`;
+            const brandSel = document.getElementById('brand-select');
+            brandSel.innerHTML = "";
+            Object.keys(DB[currentMode]).forEach(b => {
+                brandSel.innerHTML += `<option value="${b}">${b.replace('_', ' ')}</option>`;
             });
             updateSeries();
         }
 
         function updateSeries() {
             const brand = document.getElementById('brand-select').value;
-            const seriesSelect = document.getElementById('series-select');
-            seriesSelect.innerHTML = "";
-            Object.keys(DB[currentMode][brand]).forEach(series => {
-                seriesSelect.innerHTML += `<option value="${series}">${series}</option>`;
+            const seriesSel = document.getElementById('series-select');
+            seriesSel.innerHTML = "";
+            Object.keys(DB[currentMode][brand]).forEach(s => {
+                seriesSel.innerHTML += `<option value="${s}">${s}</option>`;
             });
             updateModels();
         }
@@ -175,39 +203,47 @@
         function updateModels() {
             const brand = document.getElementById('brand-select').value;
             const series = document.getElementById('series-select').value;
-            const modelSelect = document.getElementById('model-select');
-            modelSelect.innerHTML = "";
-            Object.keys(DB[currentMode][brand][series]).forEach(model => {
-                modelSelect.innerHTML += `<option value="${model}">${model}</option>`;
+            const modelSel = document.getElementById('model-select');
+            modelSel.innerHTML = "";
+            Object.keys(DB[currentMode][brand][series]).forEach(m => {
+                modelSel.innerHTML += `<option value="${m}">${m}</option>`;
             });
         }
 
-        // --- Core Engine ---
+        // --- TITAN CORE ENGINE v7.0 ---
         const workerBlob = new Blob([`
             self.onmessage = function() {
-                let s = performance.now();
-                for(let i=0; i<120000000; i++) { Math.sqrt(i) * Math.log(i+1); }
-                self.postMessage(performance.now() - s);
+                let start = performance.now();
+                let x = 0;
+                for(let i=0; i<120000000; i++) { x += Math.sqrt(i) * Math.log(i + 1); }
+                self.postMessage(performance.now() - start);
             }
         `], {type: 'application/javascript'});
 
-        function runAudit() {
+        function runBenchmark() {
             const btn = document.getElementById('run-btn');
-            const status = document.getElementById('status-msg');
+            const status = document.getElementById('status');
             btn.disabled = true; btn.style.opacity = 0.3;
-            status.innerText = "Stressing Logical Threads...";
+            status.innerText = "Processing High-Resolution Load...";
             
             const w = new Worker(URL.createObjectURL(workerBlob));
             w.postMessage('go');
             
             w.onmessage = function(e) {
-                const score = Math.floor(3500000 / e.data);
-                gsap.to({v:0}, {
-                    v: score, duration: 2.5, ease: "power4.out",
-                    onUpdate: function() { document.getElementById('score-val').innerText = Math.floor(this.targets()[0].v).toLocaleString(); },
-                    onComplete: () => { finalize(score); w.terminate(); btn.disabled = false; btn.style.opacity = 1; }
-                });
+                const score = Math.floor(4000000 / e.data);
+                animateScore(score);
+                w.terminate();
+                btn.disabled = false; btn.style.opacity = 1;
+                status.innerText = "Scan Complete. Valuation Finalized.";
             };
+        }
+
+        function animateScore(target) {
+            gsap.to({v:0}, {
+                v: target, duration: 3, ease: "power4.out",
+                onUpdate: function() { document.getElementById('score-text').innerText = Math.floor(this.targets()[0].v).toLocaleString(); },
+                onComplete: () => finalize(target)
+            });
         }
 
         function finalize(score) {
@@ -217,17 +253,20 @@
             const cond = parseFloat(document.getElementById('condition').value);
             
             let base = DB[currentMode][brand][series][model];
-            let health = Math.min(score / 4000, 1.15);
+            // Health factor based on a 2026 baseline score of 5000
+            let health = Math.min(score / 5000, 1.15);
             let final = base * cond * health;
 
             gsap.to({v:0}, {
                 v: final, duration: 2,
-                onUpdate: function() { document.getElementById('price-val').innerText = "$" + Math.floor(final < 30 ? 30 : final).toLocaleString(); }
+                onUpdate: function() { 
+                    document.getElementById('price-val').innerText = "$" + Math.floor(final < 20 ? 20 : final).toLocaleString(); 
+                }
             });
-            document.getElementById('status-msg').innerText = "Market Valuation Synced.";
+            document.getElementById('val-id').innerText = "TITAN-V7-MATRIX-" + Math.random().toString(36).substr(2, 9).toUpperCase();
         }
 
-        // Launch
+        // Initialize
         initSelections();
     </script>
 </body>
