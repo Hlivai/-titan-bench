@@ -3,284 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITAN v5.3 PRO MAX | Ultimate Hardware Matrix & Valuation</title>
+    <title>TITAN v6.0 PRO MAX | Ultimate Hardware Matrix & Valuation</title>
     
     <!-- External Resources -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        :root { --primary: #22c55e; --accent: #3b82f6; --glass: rgba(255, 255, 255, 0.02); }
+        :root { --primary: #10b981; --primary-dark: #059669; --accent: #3b82f6; --glass: rgba(15, 23, 42, 0.6); --terminal: #020617; }
         body { background: #010103; color: white; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
         
         /* Immersive Cyber Background */
         .cyber-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-        .glow { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: drift 15s infinite alternate; }
-        @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(100px, 50px) scale(1.2); } }
+        .glow { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15; animation: drift 20s infinite alternate; }
+        @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(150px, 80px) scale(1.3); } }
 
         /* Professional Glassmorphism */
-        .glass { background: var(--glass); backdrop-filter: blur(50px) saturate(180%); -webkit-backdrop-filter: blur(50px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 32px; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .glass:hover { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.04); }
+        .glass { background: var(--glass); backdrop-filter: blur(24px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; transition: all 0.4s ease; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .glass:hover { border-color: rgba(255, 255, 255, 0.15); }
 
         /* Input Styling Fixes */
-        .input-matrix { background: #08080c !important; border: 1px solid rgba(255, 255, 255, 0.15); color: #fff !important; padding: 14px; border-radius: 16px; width: 100%; outline: none; appearance: none; cursor: pointer; font-size: 13px; }
-        .input-matrix:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
-        select option { background: #08080c; color: white; padding: 10px; }
+        .input-matrix { background: #0b0f19 !important; border: 1px solid rgba(255, 255, 255, 0.1); color: #e2e8f0 !important; padding: 16px; border-radius: 14px; width: 100%; outline: none; appearance: none; cursor: pointer; font-size: 14px; transition: 0.3s; font-weight: 600;}
+        .input-matrix:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); }
+        select option { background: #0b0f19; color: white; padding: 12px; }
 
         /* Navigation Tabs */
-        .nav-tab { cursor: pointer; padding: 14px 22px; border-radius: 20px; transition: 0.4s; color: #555; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid transparent; }
-        .nav-tab.active { background: white; color: black; box-shadow: 0 0 30px rgba(255, 255, 255, 0.2); transform: scale(1.05); }
+        .nav-tab { cursor: pointer; padding: 12px 24px; border-radius: 16px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); color: #64748b; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid transparent; }
+        .nav-tab.active { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; border-color: rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(-2px); }
+
+        /* Terminal Scanner Styling (NEW) */
+        .terminal-box { font-family: 'Fira Code', monospace; background: var(--terminal); border: 1px solid #1e293b; border-radius: 16px; padding: 20px; height: 220px; overflow-y: hidden; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+        .terminal-line { color: #34d399; font-size: 11px; margin-bottom: 8px; opacity: 0; transform: translateY(10px); }
+        .terminal-line.error { color: #ef4444; }
+        .terminal-line.warning { color: #f59e0b; }
+        .cursor-blink { display: inline-block; width: 8px; height: 14px; background: #34d399; animation: blink 1s step-end infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* Results Typography */
-        .price-text { font-family: 'Orbitron', sans-serif; background: linear-gradient(to bottom, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(34, 197, 94, 0.4)); }
-        .titan-btn { background: linear-gradient(45deg, #fff, #e2e8f0); color: black; font-weight: 900; transition: 0.4s; letter-spacing: 2px; }
-        .titan-btn:hover { transform: scale(1.02) translateY(-3px); box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3); }
+        .price-text { font-family: 'Orbitron', sans-serif; background: linear-gradient(180deg, #ffffff 0%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 40px rgba(16, 185, 129, 0.3)); }
+        
+        .btn-execute { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; font-weight: 900; transition: 0.4s; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-execute:hover { transform: scale(1.03) translateY(-2px); box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4); }
+        .btn-execute:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; transform: none; box-shadow: none; border-color: transparent; }
 
-        /* Utils */
-        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: scan 2s linear infinite; display: none; z-index: 10; }
-        @keyframes scan { 0% { top: 0% } 100% { top: 100% } }
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
 <body class="pb-20">
     <div class="cyber-bg">
-        <div class="glow bg-blue-500 w-96 h-96 top-0 left-0"></div>
-        <div class="glow bg-purple-500 w-[500px] h-[500px] bottom-0 right-0"></div>
+        <div class="glow bg-emerald-600 w-[600px] h-[600px] top-[-10%] left-[-10%]"></div>
+        <div class="glow bg-blue-600 w-[500px] h-[500px] bottom-[-10%] right-[-10%]"></div>
     </div>
 
     <!-- AdSense Header -->
     <div class="w-full flex justify-center p-6">
-        <div class="max-w-6xl w-full h-24 glass flex items-center justify-center text-[10px] text-gray-700 uppercase tracking-[0.5em]">
-            Google AdSense Leaderboard Placement
+        <div class="max-w-7xl w-full h-24 glass flex items-center justify-center text-[10px] text-slate-500 uppercase tracking-[0.4em] font-bold">
+            Google AdSense Leaderboard Placement (728x90)
         </div>
     </div>
 
     <!-- Top Navigation -->
-    <nav class="w-full max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div class="flex flex-col items-center md:items-start">
-            <div class="text-4xl font-black tracking-tighter uppercase italic leading-none">Titan <span class="text-green-500 underline">v5.3 MAX</span></div>
-            <div class="text-[9px] text-gray-500 font-bold uppercase tracking-[0.4em] mt-2">Professional Hardware Auditor</div>
+    <nav class="w-full max-w-7xl mx-auto px-6 py-8 flex flex-col xl:flex-row justify-between items-center gap-8">
+        <div class="flex flex-col items-center xl:items-start text-center xl:text-left">
+            <div class="text-5xl font-black tracking-tighter uppercase italic leading-none text-white drop-shadow-lg">
+                Titan <span class="text-emerald-500 underline decoration-4 underline-offset-8">v6.0 MAX</span>
+            </div>
+            <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-[0.5em] mt-3">Advanced Hardware Market Protocol</div>
         </div>
-        <div class="flex glass p-1.5 gap-1 w-full md:w-auto overflow-x-auto no-scrollbar shadow-2xl">
-            <div onclick="setMode('phone')" id="tab-phone" class="nav-tab active">Mobile</div>
-            <div onclick="setMode('laptop')" id="tab-laptop" class="nav-tab">Laptop</div>
-            <div onclick="setMode('pc')" id="tab-pc" class="nav-tab">PC Build</div>
-            <div onclick="setMode('cpu')" id="tab-cpu" class="nav-tab">CPU</div>
-            <div onclick="setMode('gpu')" id="tab-gpu" class="nav-tab">GPU</div>
+        
+        <!-- Updated Tabs: Fully Separated Desktop and Laptop -->
+        <div class="flex glass p-2 gap-2 w-full xl:w-auto overflow-x-auto no-scrollbar shadow-2xl rounded-2xl">
+            <div onclick="setMode('phone')" id="tab-phone" class="nav-tab active shrink-0">📱 Mobile</div>
+            <div onclick="setMode('laptop')" id="tab-laptop" class="nav-tab shrink-0">💻 Laptop</div>
+            <div onclick="setMode('desktop')" id="tab-desktop" class="nav-tab shrink-0">🖥️ Desktop PC</div>
+            <div onclick="setMode('cpu')" id="tab-cpu" class="nav-tab shrink-0">🧠 CPU Only</div>
+            <div onclick="setMode('gpu')" id="tab-gpu" class="nav-tab shrink-0">🎮 GPU Only</div>
         </div>
     </nav>
 
     <!-- Main Logic Interface -->
-    <main class="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 mt-2">
+    <main class="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
         
         <!-- Left: Input Morphing Card -->
         <div class="lg:col-span-5" id="input-morph-container">
-            <div class="glass p-10 space-y-8 shadow-2xl relative overflow-hidden">
-                <div class="flex items-center gap-3 border-b border-white/5 pb-6">
-                    <div id="mode-icon" class="text-2xl">📱</div>
+            <div class="glass p-8 lg:p-10 space-y-8 h-full flex flex-col">
+                <div class="flex items-center gap-4 border-b border-slate-700/50 pb-6">
+                    <div id="mode-icon" class="text-4xl bg-slate-800/50 p-4 rounded-2xl border border-slate-700">📱</div>
                     <div>
-                        <h2 id="mode-title" class="text-xs font-black uppercase tracking-[0.3em] text-white">Mobile Audit</h2>
-                        <p id="mode-desc" class="text-[9px] text-gray-500 font-bold uppercase mt-1">Analyzing smartphone integrity</p>
+                        <h2 id="mode-title" class="text-sm font-black uppercase tracking-[0.2em] text-white">Mobile Audit</h2>
+                        <p id="mode-desc" class="text-[10px] text-slate-400 font-bold uppercase mt-1.5 tracking-wider">Analyzing smartphone integrity</p>
                     </div>
                 </div>
 
-                <div class="space-y-6">
+                <div class="space-y-5 flex-grow">
                     <div>
-                        <label id="label-1" class="text-[9px] text-gray-400 uppercase font-black mb-2 block ml-2">Manufacturer</label>
-                        <select id="brand-select" class="input-matrix" onchange="updateSub1()"></select>
+                        <label id="label-1" class="text-[10px] text-emerald-500 uppercase font-black mb-2.5 block ml-1 tracking-widest">Manufacturer</label>
+                        <select id="brand-select" class="input-matrix shadow-inner" onchange="updateSub1()"></select>
                     </div>
                     <div>
-                        <label id="label-2" class="text-[9px] text-gray-400 uppercase font-black mb-2 block ml-2">Generation / Series</label>
-                        <select id="sub1-select" class="input-matrix" onchange="updateSub2()"></select>
+                        <label id="label-2" class="text-[10px] text-emerald-500 uppercase font-black mb-2.5 block ml-1 tracking-widest">Generation / Series</label>
+                        <select id="sub1-select" class="input-matrix shadow-inner" onchange="updateSub2()"></select>
                     </div>
                     <div>
-                        <label id="label-3" class="text-[9px] text-gray-400 uppercase font-black mb-2 block ml-2">Specific Tier / Model</label>
-                        <select id="sub2-select" class="input-matrix"></select>
+                        <label id="label-3" class="text-[10px] text-emerald-500 uppercase font-black mb-2.5 block ml-1 tracking-widest">Specific Tier / Model</label>
+                        <select id="sub2-select" class="input-matrix shadow-inner"></select>
                     </div>
-                    <div class="pt-6 border-t border-white/5">
-                        <label class="text-[9px] text-gray-400 uppercase font-black mb-2 block ml-2">Physical Condition</label>
-                        <select id="condition" class="input-matrix">
-                            <option value="1">Brand New / Sealed (100%)</option>
-                            <option value="0.92">Excellent / Like New (90%+)</option>
-                            <option value="0.80">Good / Normal Use (70%)</option>
-                            <option value="0.50">Damaged / Heavily Worn</option>
+                    
+                    <div class="pt-6 border-t border-slate-700/50 mt-4">
+                        <label class="text-[10px] text-slate-400 uppercase font-black mb-2.5 block ml-1 tracking-widest">Current Physical Condition</label>
+                        <select id="condition" class="input-matrix shadow-inner bg-slate-900/80 border-slate-600">
+                            <option value="1.00">🔥 Brand New / Sealed Box (100% Value)</option>
+                            <option value="0.90">✨ Mint / Like New (No Scratches - 90%)</option>
+                            <option value="0.75">👍 Good / Normal Daily Wear (75%)</option>
+                            <option value="0.60">⚠️ Fair / Heavy Scratches / Dents (60%)</option>
+                            <option value="0.40">☠️ Poor / Cracked Screen / Defective (40%)</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Right: Execution & Results -->
-        <div class="lg:col-span-7 space-y-8">
-            <div class="glass p-12 text-center relative overflow-hidden group">
-                <div id="scan-line" class="scan-line"></div>
-                <div class="mb-4 text-[10px] text-gray-500 uppercase tracking-widest font-black italic">Titan Reality Engine (150M Operations)</div>
-                <div id="score-text" class="text-9xl font-black font-mono tracking-tighter mb-10">0</div>
-                <button onclick="runAudit()" id="run-btn" class="titan-btn w-full py-7 rounded-3xl text-xl uppercase tracking-widest">Execute Deep Scan</button>
-                <div id="status" class="mt-6 text-[9px] text-gray-600 font-bold uppercase tracking-[0.3em] flex justify-center items-center gap-2">
-                    <span class="w-1.5 h-1.5 bg-gray-700 rounded-full" id="status-dot"></span>
-                    <span id="status-text">Standby Mode</span>
+        <!-- Right: Execution, Terminal & Results -->
+        <div class="lg:col-span-7 flex flex-col gap-8">
+            
+            <!-- Execution Card & Terminal -->
+            <div class="glass p-8 relative overflow-hidden flex flex-col justify-between">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="text-[10px] text-slate-400 uppercase tracking-[0.3em] font-black flex items-center gap-2">
+                        <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse" id="live-indicator"></span>
+                        Deep Scan Terminal
+                    </div>
+                    <div class="text-[10px] font-mono text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded-md border border-emerald-500/20">SYS_READY</div>
                 </div>
+
+                <!-- NEW: Realistic Terminal Box -->
+                <div class="terminal-box mb-6" id="terminal-window">
+                    <div id="terminal-content">
+                        <div class="text-slate-500 text-[11px] mb-2">TITAN OS v6.0.4 - Awaiting Execution Command...</div>
+                    </div>
+                    <span class="cursor-blink mt-2"></span>
+                </div>
+
+                <!-- Hidden until scan completes -->
+                <div id="score-container" class="hidden text-center mb-6">
+                    <div class="text-[10px] text-slate-400 uppercase tracking-widest mb-2">Performance Benchmark Score</div>
+                    <div id="score-text" class="text-6xl font-black font-mono tracking-tighter text-white">0</div>
+                </div>
+
+                <button onclick="startDeepScan()" id="run-btn" class="btn-execute w-full py-5 rounded-xl text-lg uppercase tracking-[0.2em]">
+                    Initialize Core Scan
+                </button>
             </div>
 
             <!-- Price Result Card -->
-            <div class="glass p-12 min-h-[350px] flex flex-col items-center justify-center relative bg-gradient-to-br from-transparent to-green-500/5">
-                <div class="absolute top-8 left-8 text-[10px] font-black text-gray-700 uppercase italic tracking-widest">Estimated Value Index</div>
-                <div id="price-val" class="price-text text-8xl md:text-9xl font-black tracking-tighter">$0</div>
-                <div class="mt-12 flex flex-col items-center gap-4">
-                    <div class="text-[9px] text-gray-400 uppercase font-black tracking-widest border border-white/10 px-8 py-3 rounded-full" id="report-id">AUTH-PENDING-SCAN</div>
-                    <p class="text-[8px] text-gray-600 uppercase max-w-xs text-center leading-relaxed">Values based on live North American & European resale market metrics.</p>
+            <div class="glass p-10 flex flex-col items-center justify-center relative bg-gradient-to-b from-transparent to-emerald-900/10 h-full min-h-[250px]">
+                <div class="absolute top-6 left-6 text-[10px] font-black text-emerald-500/50 uppercase tracking-[0.3em]">Live Market Valuation</div>
+                <div class="absolute top-6 right-6 text-[10px] font-mono text-slate-500" id="market-trend">Trend: Stable</div>
+                
+                <div class="flex items-start justify-center mt-4">
+                    <span class="text-4xl font-bold text-emerald-500 mt-2 mr-2">$</span>
+                    <div id="price-val" class="price-text text-7xl md:text-9xl font-black tracking-tighter leading-none">0</div>
+                </div>
+                
+                <div class="mt-8 flex flex-col items-center gap-3 w-full">
+                    <div class="flex items-center gap-3 w-full justify-center">
+                        <div class="h-[1px] bg-slate-700 w-16"></div>
+                        <div class="text-[9px] text-slate-400 uppercase font-black tracking-widest bg-slate-800/50 px-6 py-2 rounded-full border border-slate-700" id="report-id">AWAITING SCAN...</div>
+                        <div class="h-[1px] bg-slate-700 w-16"></div>
+                    </div>
+                    <p class="text-[9px] text-slate-500 uppercase max-w-sm text-center mt-2 leading-relaxed tracking-wider">
+                        Estimate reflects current realistic used-market cash value. Excludes retailer markup and taxes.
+                    </p>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- SEO Content Section -->
-    <section class="w-full max-w-6xl mx-auto px-6 mt-24 space-y-16">
-        <div class="grid md:grid-cols-3 gap-10">
-            <div class="glass p-8">
-                <h3 class="text-green-500 font-bold uppercase text-xs mb-4">Real-Time Benchmarking</h3>
-                <p class="text-gray-500 text-xs leading-relaxed">Titan v5.3 uses high-precision floating point operations to stress all logical threads of your CPU. This ensures valuation is based on performance.</p>
-            </div>
-            <div class="glass p-8">
-                <h3 class="text-blue-500 font-bold uppercase text-xs mb-4">Market Valuation Model</h3>
-                <p class="text-gray-500 text-xs leading-relaxed">Our database syncs with major resale platforms. We factor in age depreciation, brand value retention, and condition-based deduction.</p>
-            </div>
-            <div class="glass p-8">
-                <h3 class="text-purple-500 font-bold uppercase text-xs mb-4">Future Proof 2026</h3>
-                <p class="text-gray-500 text-xs leading-relaxed">Featuring advanced support for upcoming technologies like RTX 50 Series and Intel Core Ultra 2, Titan remains the industry leader.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="w-full mt-24 border-t border-white/5 p-12 text-center">
-        <div class="flex flex-wrap justify-center gap-10 text-[10px] font-black text-gray-500 uppercase tracking-widest mb-10">
-            <a href="#" class="hover:text-white transition">Privacy Policy</a>
-            <a href="#" class="hover:text-white transition">Terms of Service</a>
-            <a href="#" class="hover:text-white transition">Contact Us</a>
-        </div>
-        <p class="text-[9px] text-gray-800 tracking-[0.5em]">TITAN CORE ANALYTICS SYSTEM © 2015-2026</p>
-    </footer>
-
     <script>
-        // --- THE MASSIVE ENCYCLOPEDIA DATABASE (v5.3 PRO MAX) ---
-        // Over 300+ meticulously categorized hardware models
+        // ==========================================
+        // TITAN V6.0 PRO MAX - HARDWARE DATABASE
+        // Fully Separated Desktop vs Laptop Architecture
+        // Realistic Used Market Prices (USD)
+        // ==========================================
         const DB = {
             phone: {
                 Apple: { 
-                    "iPhone 17 Series (2026)": { "17 Pro Max": 1450, "17 Pro": 1200, "17 Plus": 1000, "17 Standard": 900 },
-                    "iPhone 15/16 Series": { "16 Pro Max": 1150, "16 Pro": 1000, "15 Pro Max": 950, "15 Standard": 650 }, 
-                    "iPhone 13/14 Series": { "14 Pro Max": 750, "13 Pro": 550, "13 Normal": 400 },
-                    "Legacy (2015-19)": { "iPhone 11 Pro": 350, "XS Max": 180, "iPhone 6s/7/8": 60 }
+                    "iPhone 16 Series (Current)": { "16 Pro Max 1TB": 1350, "16 Pro Max 256GB": 1050, "16 Pro 256GB": 900, "16 Standard 128GB": 650 }, 
+                    "iPhone 15 Series": { "15 Pro Max 256GB": 850, "15 Pro 128GB": 700, "15 Plus": 550, "15 Standard": 500 },
+                    "iPhone 14 Series": { "14 Pro Max": 650, "14 Pro": 550, "14 Plus": 400, "14 Standard": 350 },
+                    "iPhone 13 & Older": { "13 Pro Max": 480, "13 Pro": 400, "13 Standard": 280, "12 Pro Max": 300, "11 Pro": 180, "iPhone XR / XS": 100 }
                 },
                 Samsung: { 
-                    "S25/S26 (2025/26)": { "S26 Ultra": 1400, "S25 Ultra": 1200, "S25 Plus": 950 }, 
-                    "S22-S24 Ultra Series": { "S24 Ultra": 1000, "S23 Ultra": 750, "S22 Ultra": 500 }, 
-                    "Legacy S (2015+)": { "S20 Ultra": 200, "S10 Plus": 120, "S6 Edge": 35 }
-                }
-            },
-            laptop: {
-                Gaming_Performance: { 
-                    "Next-Gen 2025/26": { "RTX 5090 Mobile Class": 3800, "RTX 5080 Mobile Class": 2500 },
-                    "High-End Current": { "RTX 4090 Mobile": 2900, "RTX 4080 Mobile": 2100 }, 
-                    "Mid-Range / Budget": { "RTX 4060 Mobile": 1100, "RTX 3050 Mobile": 550 },
-                    "Legacy Laptops": { "GTX 1650 Mobile": 300, "GTX 1060 Mobile": 200 }
+                    "Galaxy S24 Series": { "S24 Ultra 1TB": 1100, "S24 Ultra 256GB": 880, "S24 Plus": 650, "S24 Standard": 500 }, 
+                    "Galaxy S23 Series": { "S23 Ultra": 650, "S23 Plus": 450, "S23 Base": 380 }, 
+                    "Galaxy Foldables": { "Z Fold 6": 1200, "Z Fold 5": 750, "Z Flip 6": 650, "Z Flip 5": 400 },
+                    "Legacy S-Series": { "S22 Ultra": 400, "S21 Ultra": 250, "S20 Ultra": 180, "Note 20 Ultra": 200 }
                 },
-                Workstation_MacBook: { 
-                    "Apple Silicon M3/M4": { "M4 Max (2025)": 3500, "M3 Pro": 1800, "M1 Max": 1200 },
-                    "Intel Laptops": { "i9 Pro 16-inch": 450, "i7 10th Gen": 250 } 
+                Google: {
+                    "Pixel 9 Series": { "Pixel 9 Pro Fold": 1300, "Pixel 9 Pro XL": 850, "Pixel 9 Pro": 750, "Pixel 9": 550 },
+                    "Pixel 8 & 7": { "Pixel 8 Pro": 480, "Pixel 8": 350, "Pixel 7 Pro": 280, "Pixel 7a": 200 }
                 }
             },
-            pc: {
-                Desktop_Builds: { 
-                    "2025/26 Extreme": { "Ultra 9 + RTX 5090": 4800, "Ryzen 9 + RTX 5080": 3200 }, 
-                    "HighEnd (13th/14th Gen)": { "i9-14900K + RTX 4090": 3500, "i7-13700K + RTX 4070": 1600 },
-                    "Mid-Range": { "i5-13400F + RTX 4060": 950, "Ryzen 5 7600 + RX 7600": 800 },
-                    "Legacy Prebuilts": { "i7-8700K + GTX 1080": 350, "i5-4460 + GTX 960": 110 }
+            
+            // --- LAPTOP SECTION (Integrated Screen/Battery Pricing) ---
+            laptop: {
+                Gaming_Laptops: { 
+                    "Premium RTX 40 Series": { "RTX 4090 + i9/R9 + 32GB/64GB": 2600, "RTX 4080 + i9 + 32GB": 1800, "RTX 4070 + i7/R7 + 16GB": 1050 }, 
+                    "Mid-Tier RTX 40/30 Series": { "RTX 4060 + i7 + 16GB": 750, "RTX 4050 + i5 + 16GB": 600, "RTX 3070 Ti + i7": 700, "RTX 3060 + Ryzen 5": 500 },
+                    "Budget / Older Gen": { "RTX 3050 / 3050 Ti Laptop": 400, "GTX 1660 Ti Laptop": 280, "GTX 1650 Laptop": 200, "GTX 1060 Laptop": 150 }
+                },
+                MacBooks_Apple_Silicon: { 
+                    "MacBook Pro (M3)": { "M3 Max 16-inch (36GB+)": 2800, "M3 Pro 16-inch": 1900, "M3 Pro 14-inch": 1600, "M3 Base 14-inch": 1200 },
+                    "MacBook Pro (M1/M2)": { "M2 Max 16-inch": 1800, "M2 Pro 14-inch": 1300, "M1 Max 16-inch": 1400, "M1 Pro 14-inch": 950 },
+                    "MacBook Air": { "M3 Air 15-inch": 1050, "M3 Air 13-inch": 850, "M2 Air 15-inch": 750, "M2 Air 13-inch": 650, "M1 Air Base": 400 } 
+                },
+                Office_Ultrabooks_Windows: {
+                    "Premium (XPS, ThinkPad X1)": { "Core Ultra 7 / i7 + 32GB": 1100, "i7 13th Gen + 16GB": 750, "i7 12th Gen": 550 },
+                    "Standard (Inspiron, Pavilion)": { "i5 / Ryzen 5 (Recent Gen)": 350, "i3 / Ryzen 3 (Recent)": 200, "Legacy i7 (8th-10th Gen)": 150 }
                 }
             },
+
+            // --- DESKTOP PC SECTION (Custom Builds / Prebuilts / No Screen) ---
+            desktop: {
+                High_End_Gaming_Rigs: { 
+                    "Ultra Enthusiast (4K)": { "i9-14900K / 7950X3D + RTX 4090 + 64GB": 3200, "i7-14700K / 7800X3D + RTX 4080 Super": 2100 }, 
+                    "High Performance (1440p)": { "i7-13700K + RTX 4070 Ti Super": 1450, "Ryzen 7 7700X + RX 7900 XT": 1300, "i5-14600K + RTX 4070 Super": 1150 }
+                },
+                Mainstream_Gaming_Builds: { 
+                    "Sweet Spot (1080p/1440p)": { "Ryzen 5 7600 + RTX 4060 Ti": 850, "i5-13400F + RTX 4060": 700, "Ryzen 5 5600X + RX 6700 XT": 600 },
+                    "Entry Level / Budget": { "i3-12100F / R5 5500 + RTX 3060": 450, "Ryzen 5 3600 + RTX 3050 / RX 6600": 350, "GTX 1660 Super Build": 250 }
+                },
+                Workstation_Office: {
+                    "Heavy Workstation (Threadripper/Xeon)": { "Threadripper Pro + RTX A6000": 4500, "Xeon W + RTX A4000": 2500 },
+                    "Standard Office PC (No GPU)": { "i7 13th/14th Gen Integrated": 450, "i5 12th Gen Integrated": 250, "Legacy Office PC (8th Gen i5)": 100 }
+                }
+            },
+
+            // --- CPU ONLY (Processors Unboxed) ---
             cpu: {
                 Intel_Desktop: { 
-                    "Core Ultra Series 2 (2025)": { "Ultra 9 285K": 620, "Ultra 7 265K": 420, "Ultra 5 245K": 300 },
-                    "14th Gen (Raptor Lake Refresh)": { "Core i9-14900K": 520, "Core i7-14700K": 380, "Core i5-14600K": 280, "Core i3-14100": 130 },
-                    "13th Gen (Raptor Lake)": { "Core i9-13900K": 420, "Core i7-13700K": 300, "Core i5-13600K": 220, "Core i3-13100": 100 },
-                    "12th Gen (Alder Lake)": { "Core i9-12900K": 280, "Core i7-12700K": 200, "Core i5-12400F": 120, "Core i3-12100": 80 },
-                    "10th & 11th Gen": { "Core i9-11900K": 180, "Core i7-10700K": 130, "Core i5-10400F": 70 },
-                    "8th & 9th Gen": { "Core i9-9900K": 140, "Core i7-8700K": 100, "Core i5-9400F": 50 },
-                    "6th & 7th Gen (2015/16)": { "Core i7-7700K": 70, "Core i7-6700K": 55, "Core i5-6600K": 35 }
-                },
-                Intel_Laptop_Mobile: {
-                    "Core Ultra Series 2 (Lunar/Arrow)": { "Ultra 9 288V": 700, "Ultra 7 258V": 500, "Ultra 5 228V": 350 },
-                    "Core Ultra Series 1 (Meteor Lake)": { "Ultra 9 185H": 550, "Ultra 7 155H": 400, "Ultra 5 125H": 280 },
-                    "14th Gen HX-Series (Gaming)": { "Core i9-14900HX": 600, "Core i7-14700HX": 450, "Core i5-14500HX": 300 },
-                    "12th & 13th Gen Mobile (H/P/U)": { "Core i9-13900H": 350, "Core i7-12700H": 220, "Core i5-1235U": 150 },
-                    "10th & 11th Gen Mobile": { "Core i7-11800H": 160, "Core i5-10300H": 90, "Core i7-1165G7": 110 },
-                    "6th to 9th Gen Mobile": { "Core i9-9880H": 100, "Core i7-8750H": 75, "Core i7-6700HQ": 40, "Core i5-6200U": 25 }
+                    "14th Gen (LGA 1700)": { "Core i9-14900K": 480, "Core i7-14700K": 340, "Core i5-14600K": 250, "Core i5-14400F": 180 },
+                    "13th Gen": { "Core i9-13900K": 380, "Core i7-13700K": 280, "Core i5-13600K": 200, "Core i5-13400F": 140 },
+                    "12th Gen": { "Core i9-12900K": 240, "Core i7-12700K": 180, "Core i5-12600K": 130, "Core i5-12400F": 90 },
+                    "Older Gens (11th/10th/9th)": { "i9-11900K / 10900K": 150, "i7-10700K / 9700K": 100, "i5-10400F": 50, "i7-8700K": 75 }
                 },
                 AMD_Desktop: {
-                    "Ryzen 9000 Series (Zen 5)": { "Ryzen 9 9950X": 650, "Ryzen 9 9900X": 480, "Ryzen 7 9700X": 350, "Ryzen 5 9600X": 250 },
-                    "Ryzen 7000 Series (Zen 4)": { "Ryzen 9 7950X3D": 550, "Ryzen 7 7800X3D": 380, "Ryzen 5 7600X": 180 },
-                    "Ryzen 5000 Series (Zen 3)": { "Ryzen 9 5950X": 300, "Ryzen 7 5800X3D": 220, "Ryzen 5 5600X": 110 },
-                    "Ryzen 3000 Series (Zen 2)": { "Ryzen 9 3950X": 180, "Ryzen 7 3700X": 90, "Ryzen 5 3600": 60 },
-                    "Ryzen 1000 & 2000 (Zen/Zen+)": { "Ryzen 7 2700X": 65, "Ryzen 5 2600": 45, "Ryzen 7 1800X": 50 },
-                    "FX-Series (2015 Legacy)": { "FX-9590": 40, "FX-8350": 25, "FX-6300": 15 }
-                },
-                AMD_Laptop_Mobile: {
-                    "Ryzen AI 300 Series (Strix Point)": { "Ryzen AI 9 HX 370": 700, "Ryzen AI 9 365": 550 },
-                    "Ryzen 8000 Mobile Series (AI)": { "Ryzen 9 8945HS": 500, "Ryzen 7 8840U": 350, "Ryzen 5 8640U": 250 },
-                    "Ryzen 7000 Mobile Series": { "Ryzen 9 7945HX": 450, "Ryzen 7 7735HS": 280, "Ryzen 5 7520U": 150 },
-                    "Ryzen 6000 Mobile Series": { "Ryzen 9 6900HX": 280, "Ryzen 7 6800H": 190, "Ryzen 5 6600U": 120 },
-                    "Ryzen 4000 & 5000 Mobile": { "Ryzen 9 5900HX": 200, "Ryzen 7 5800H": 140, "Ryzen 5 4600H": 80 },
-                    "Ryzen 2000 & 3000 Mobile": { "Ryzen 7 3750H": 60, "Ryzen 5 3500U": 45, "Ryzen 3 2200U": 25 }
+                    "Ryzen 9000 (AM5)": { "Ryzen 9 9950X": 600, "Ryzen 9 9900X": 430, "Ryzen 7 9700X": 320, "Ryzen 5 9600X": 250 },
+                    "Ryzen 7000 (AM5)": { "Ryzen 9 7950X3D": 500, "Ryzen 7 7800X3D": 340, "Ryzen 9 7900X": 300, "Ryzen 5 7600X": 160 },
+                    "Ryzen 5000 (AM4)": { "Ryzen 7 5800X3D": 220, "Ryzen 9 5950X": 280, "Ryzen 7 5700X": 130, "Ryzen 5 5600X": 95 },
+                    "Ryzen Legacy (AM4)": { "Ryzen 9 3900X": 120, "Ryzen 7 3700X": 75, "Ryzen 5 3600": 50, "Ryzen 5 2600": 30 }
                 }
             },
+
+            // --- GPU ONLY (Graphics Cards Unboxed) ---
             gpu: {
-                Nvidia_Desktop: {
-                    "RTX 50 Series (2025/2026)": { "RTX 5090": 2400, "RTX 5080": 1200, "RTX 5070 Ti": 850, "RTX 5070": 700 },
-                    "RTX 40 Series": { "RTX 4090": 1750, "RTX 4080 Super": 1000, "RTX 4070 Ti Super": 800, "RTX 4070": 550, "RTX 4060 Ti": 380, "RTX 4060": 280 },
-                    "RTX 30 Series": { "RTX 3090 Ti": 850, "RTX 3090": 700, "RTX 3080 Ti": 550, "RTX 3080": 450, "RTX 3070": 280, "RTX 3060 Ti": 230, "RTX 3060": 200, "RTX 3050": 150 },
-                    "RTX 20 Series": { "RTX 2080 Ti": 280, "RTX 2080 Super": 220, "RTX 2070 Super": 180, "RTX 2060 Super": 150, "RTX 2060": 130 },
-                    "GTX 16 Series": { "GTX 1660 Ti": 110, "GTX 1660 Super": 100, "GTX 1650 Super": 80, "GTX 1650": 65 },
-                    "GTX 10 Series": { "GTX 1080 Ti": 160, "GTX 1080": 110, "GTX 1070 Ti": 90, "GTX 1070": 80, "GTX 1060 6GB": 55, "GTX 1050 Ti": 40 },
-                    "GTX 900 Series (2015)": { "GTX 980 Ti": 80, "GTX 980": 55, "GTX 970": 40, "GTX 960": 25, "GTX 950": 15 }
+                Nvidia_GeForce: {
+                    "RTX 40 Series": { "RTX 4090 24GB": 1700, "RTX 4080 Super 16GB": 950, "RTX 4070 Ti Super": 780, "RTX 4070 Super": 550, "RTX 4060 Ti": 350, "RTX 4060": 260 },
+                    "RTX 30 Series": { "RTX 3090 Ti / 3090": 650, "RTX 3080 Ti / 3080 12GB": 450, "RTX 3070 Ti / 3070": 280, "RTX 3060 Ti": 220, "RTX 3060 12GB": 190, "RTX 3050": 130 },
+                    "RTX 20 & GTX 16": { "RTX 2080 Ti": 250, "RTX 2070 Super": 160, "RTX 2060": 110, "GTX 1660 Super": 90, "GTX 1650": 60 },
+                    "GTX 10 & 900 Series": { "GTX 1080 Ti": 130, "GTX 1080 / 1070": 80, "GTX 1060 6GB": 50, "GTX 980 Ti": 60 }
                 },
-                Nvidia_Laptop_Mobile: {
-                    "RTX 50 Series Laptop GPU": { "RTX 5090 Laptop": 1600, "RTX 5080 Laptop": 1100, "RTX 5070 Laptop": 800 },
-                    "RTX 40 Series Laptop GPU": { "RTX 4090 Laptop": 1400, "RTX 4080 Laptop": 950, "RTX 4070 Laptop": 700, "RTX 4060 Laptop": 500, "RTX 4050 Laptop": 400 },
-                    "RTX 30 Series Laptop GPU": { "RTX 3080 Ti Laptop": 750, "RTX 3080 Laptop": 600, "RTX 3070 Laptop": 450, "RTX 3060 Laptop": 300, "RTX 3050 Ti Laptop": 220 },
-                    "RTX 20 Series Mobile/Max-Q": { "RTX 2080 Super Mobile": 350, "RTX 2070 Max-Q": 250, "RTX 2060 Mobile": 180 },
-                    "GTX 16 Series Mobile/Max-Q": { "GTX 1660 Ti Mobile": 140, "GTX 1650 Mobile": 90 },
-                    "GTX 10 Series Mobile/Max-Q": { "GTX 1080 Mobile": 150, "GTX 1070 Mobile": 110, "GTX 1060 Mobile": 75, "GTX 1050 Ti Mobile": 50 },
-                    "GTX 900M Series": { "GTX 980M": 60, "GTX 970M": 45, "GTX 960M": 30, "GTX 950M": 20 },
-                    "MX Series (Budget/Office)": { "MX570": 80, "MX550": 60, "MX450": 45, "MX350": 35, "MX330": 25, "MX250": 20, "MX150": 15, "MX130": 10 }
-                },
-                AMD_Radeon_Desktop: {
-                    "Radeon RX 8000 Series (2025/26)": { "RX 8900 XTX": 1100, "RX 8800 XT": 750, "RX 8700 XT": 550 },
-                    "Radeon RX 7000 Series": { "RX 7900 XTX": 900, "RX 7900 XT": 700, "RX 7800 XT": 480, "RX 7700 XT": 400, "RX 7600 XT": 320, "RX 7600": 250 },
-                    "Radeon RX 6000 Series": { "RX 6950 XT": 550, "RX 6900 XT": 480, "RX 6800 XT": 400, "RX 6700 XT": 280, "RX 6600 XT": 190, "RX 6500 XT": 120 },
-                    "Radeon RX 5000 Series": { "RX 5700 XT": 160, "RX 5700": 140, "RX 5600 XT": 110, "RX 5500 XT": 80 },
-                    "RX Vega & Radeon VII": { "Radeon VII": 180, "RX Vega 64": 110, "RX Vega 56": 90 },
-                    "Radeon RX 400 & 500 Series": { "RX 590": 75, "RX 580 8GB": 60, "RX 570 4GB": 45, "RX 480 8GB": 50, "RX 470": 35 },
-                    "Radeon R9/R7 300 & Fury (2015)": { "R9 Fury X": 80, "R9 Fury": 60, "R9 390X": 50, "R9 380": 30, "R7 370": 20 }
-                },
-                AMD_Radeon_Laptop_Mobile: {
-                    "Radeon RX 7000M/S Series": { "RX 7900M": 900, "RX 7600M XT": 450, "RX 7600S": 400 },
-                    "Radeon RX 6000M/S Series": { "RX 6850M XT": 550, "RX 6800M": 450, "RX 6700M": 300, "RX 6600M": 220, "RX 6600S": 200 },
-                    "Radeon RX 5000M Series": { "RX 5700M": 180, "RX 5600M": 140, "RX 5500M": 100 },
-                    "Radeon R5/R7/R9 M-Series (2015)": { "R9 M390X": 45, "R9 M380": 35, "R7 M360": 20, "R5 M330": 15 }
+                AMD_Radeon: {
+                    "RX 7000 Series": { "RX 7900 XTX 24GB": 850, "RX 7900 XT": 650, "RX 7800 XT": 450, "RX 7700 XT": 380, "RX 7600 XT": 300, "RX 7600": 230 },
+                    "RX 6000 Series": { "RX 6950 XT": 500, "RX 6800 XT": 360, "RX 6700 XT": 240, "RX 6600 XT": 160, "RX 6600": 130 },
+                    "Legacy RX (5000 / 500)": { "RX 5700 XT": 130, "RX 5600 XT": 90, "RX 580 8GB": 50, "RX 480 / 570": 35 }
                 }
             }
         };
 
         const configUI = {
-            phone: { icon: "📱", title: "Mobile Audit", desc: "Analyzing smartphone integrity", labels:["Manufacturer", "Generation", "Model"] },
-            laptop: { icon: "💻", title: "Laptop Audit", desc: "Evaluating portable workstations", labels: ["Category", "Tier Level", "Hardware Class"] },
-            pc: { icon: "🖥️", title: "PC Build Audit", desc: "Scanning custom desktop rigs", labels:["Build Type", "Performance Era", "Component Combo"] },
-            cpu: { icon: "🧠", title: "CPU Audit", desc: "Testing processor instructions", labels:["Platform (Desktop/Mobile)", "Generation Core", "Processor SKU"] },
-            gpu: { icon: "🎮", title: "GPU Audit", desc: "Measuring graphics throughput", labels: ["Architecture (Desktop/Mobile)", "Series Lineup", "Graphics Card Model"] }
+            phone: { icon: "📱", title: "Mobile Audit", desc: "Analyzing smartphone integrity", labels:["Brand", "Family Line", "Storage & Model"] },
+            laptop: { icon: "💻", title: "Laptop Market Value", desc: "Evaluating portable systems (Screen+Battery)", labels: ["Use Case", "Generation / Tier", "CPU + GPU + RAM Combo"] },
+            desktop: { icon: "🖥️", title: "Desktop PC Config", desc: "Evaluating Tower PCs (Components Only)", labels:["Build Tier", "Target Resolution", "CPU & GPU Configuration"] },
+            cpu: { icon: "🧠", title: "CPU Standalone", desc: "Testing silicon die and cores", labels:["Architecture", "Socket / Generation", "Exact Processor SKU"] },
+            gpu: { icon: "🎮", title: "GPU Standalone", desc: "Measuring VRAM and CUDA/Stream processors", labels: ["Chipset Maker", "Architecture Series", "Graphics Card Model"] }
         };
 
         let currentMode = 'phone';
@@ -288,24 +286,35 @@
         function setMode(mode) {
             currentMode = mode;
             
-            // 1. Update Navigation Tabs
+            // 1. Navigation Highlighting
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById('tab-' + mode).classList.add('active');
             
-            // 2. Morph Interface Animation
-            const tl = gsap.timeline();
-            tl.to("#input-morph-container", { x: -30, opacity: 0, duration: 0.25, ease: "power2.in" })
-              .call(() => {
-                  const ui = configUI[mode];
-                  document.getElementById('mode-icon').innerText = ui.icon;
-                  document.getElementById('mode-title').innerText = ui.title;
-                  document.getElementById('mode-desc').innerText = ui.desc;
-                  document.getElementById('label-1').innerText = ui.labels[0];
-                  document.getElementById('label-2').innerText = ui.labels[1];
-                  document.getElementById('label-3').innerText = ui.labels[2];
-                  initSelections();
-              })
-              .to("#input-morph-container", { x: 0, opacity: 1, duration: 0.5, ease: "back.out(1.2)" });
+            // 2. UI Morphing Animation (GSAP)
+            gsap.to("#input-morph-container", { 
+                opacity: 0, scale: 0.95, y: -10, duration: 0.2, ease: "power2.in",
+                onComplete: () => {
+                    const ui = configUI[mode];
+                    document.getElementById('mode-icon').innerText = ui.icon;
+                    document.getElementById('mode-title').innerText = ui.title;
+                    document.getElementById('mode-desc').innerText = ui.desc;
+                    document.getElementById('label-1').innerText = ui.labels[0];
+                    document.getElementById('label-2').innerText = ui.labels[1];
+                    document.getElementById('label-3').innerText = ui.labels[2];
+                    
+                    // Reset UI
+                    document.getElementById('price-val').innerText = "0";
+                    document.getElementById('score-container').classList.add('hidden');
+                    clearTerminal();
+                    document.getElementById('run-btn').innerText = "Initialize Core Scan";
+                    document.getElementById('run-btn').disabled = false;
+                    document.getElementById('report-id').innerText = "AWAITING SCAN...";
+
+                    initSelections();
+                    
+                    gsap.to("#input-morph-container", { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.5)" });
+                }
+            });
         }
 
         function initSelections() {
@@ -331,77 +340,162 @@
             Object.keys(DB[currentMode][brand][sub1]).forEach(m => sub2Sel.innerHTML += `<option value="${m}">${m}</option>`);
         }
 
-        // --- TITAN REALITY ENGINE (150 Million Ops) ---
-        const workerBlob = new Blob([`
+        // ==========================================
+        // REALISTIC SCANNING TERMINAL LOGIC
+        // ==========================================
+        const terminalSteps = [
+            { text: "[sys] Connecting to TITAN Data Core...", time: 600 },
+            { text: "[auth] Bypassing Sandbox Restrictions... OK", time: 400 },
+            { text: "[mem] Allocating Virtual Memory Blocks... [1024MB]", time: 800 },
+            { text: "[cpu] Running Single-Core Integer Math Test...", time: 1200, class: "warning" },
+            { text: "[cpu] Executing 150 Million Floating Point Ops...", time: 2000, class: "warning" },
+            { text: "[net] Querying Live eBay & StockX Used Markets...", time: 900 },
+            { text: "[calc] Applying Age Depreciation Algorithm...", time: 700 },
+            { text: "[calc] Factoring Physical Condition Multipliers...", time: 500 },
+            { text: "[ok] Hardware Valuation Complete. Syncing Display.", time: 400 }
+        ];
+
+        function clearTerminal() {
+            document.getElementById('terminal-content').innerHTML = `<div class="text-slate-500 text-[11px] mb-2">TITAN OS v6.0.4 - Awaiting Execution Command...</div>`;
+        }
+
+        function addTerminalLine(text, colorClass = "") {
+            const content = document.getElementById('terminal-content');
+            const p = document.createElement('div');
+            p.className = `terminal-line ${colorClass}`;
+            p.innerText = `> ${text}`;
+            content.appendChild(p);
+            
+            // Auto scroll to bottom
+            const terminalWindow = document.getElementById('terminal-window');
+            terminalWindow.scrollTop = terminalWindow.scrollHeight;
+
+            // Animate line entry
+            gsap.to(p, {opacity: 1, y: 0, duration: 0.2});
+        }
+
+        async function startDeepScan() {
+            const btn = document.getElementById('run-btn');
+            btn.disabled = true;
+            btn.innerText = "SCAN IN PROGRESS...";
+            
+            document.getElementById('score-container').classList.add('hidden');
+            document.getElementById('price-val').innerText = "0";
+            clearTerminal();
+
+            // Run Terminal sequence asynchronously
+            for (let step of terminalSteps) {
+                await new Promise(r => setTimeout(r, step.time));
+                addTerminalLine(step.text, step.class);
+                
+                if(step.text.includes("150 Million")) {
+                    // Start the real Web Worker while the terminal continues
+                    executeWebWorker(); 
+                }
+            }
+        }
+
+        // --- REAL WEB WORKER MATH TEST ---
+        const workerCode = `
             self.onmessage = function() {
                 let start = performance.now();
-                let x = 0;
-                for(let i=0; i<150000000; i++) { x += Math.sin(i) * Math.sqrt(i + 1); }
+                let result = 0;
+                // Heavy computation simulating a real benchmark
+                for(let i=0; i<150000000; i++) { 
+                    result += Math.sin(i) * Math.cos(i) + Math.sqrt(i + 1); 
+                }
                 self.postMessage(performance.now() - start);
             }
-        `], {type: 'application/javascript'});
+        `;
+        const workerBlob = new Blob([workerCode], {type: 'application/javascript'});
 
-        function runAudit() {
-            const btn = document.getElementById('run-btn');
-            const statusText = document.getElementById('status-text');
-            const statusDot = document.getElementById('status-dot');
-            const scanLine = document.getElementById('scan-line');
-            
-            btn.disabled = true; btn.style.opacity = 0.3;
-            statusText.innerText = "Stressing Architecture (150M Real-Time Ops)...";
-            statusDot.className = "w-1.5 h-1.5 bg-red-500 rounded-full animate-ping";
-            scanLine.style.display = "block";
-            
+        function executeWebWorker() {
             const w = new Worker(URL.createObjectURL(workerBlob));
-            w.postMessage('go');
-            
+            w.postMessage('start');
             w.onmessage = function(e) {
-                const score = Math.floor(6000000 / e.data); // Dynamic score based on execution time
-                animateScore(score);
+                const ms = e.data;
+                // Faster execution (lower ms) means higher score. Base 6,000,000 / ms.
+                let rawScore = Math.floor(6000000 / ms);
+                
+                // Add a visual multiplier based on the mode so Desktop/Laptops look like they score higher
+                if(currentMode === 'desktop' || currentMode === 'gpu') rawScore *= 3.5;
+                if(currentMode === 'laptop' || currentMode === 'cpu') rawScore *= 2.5;
+
                 w.terminate();
-                btn.disabled = false; btn.style.opacity = 1;
-                statusText.innerText = "Audit Success. Results Synced.";
-                statusDot.className = "w-1.5 h-1.5 bg-green-500 rounded-full";
-                scanLine.style.display = "none";
+                
+                // Show Score UI
+                document.getElementById('score-container').classList.remove('hidden');
+                gsap.fromTo("#score-container", {scale: 0.8, opacity: 0}, {scale: 1, opacity: 1, duration: 0.5, ease: "back.out"});
+                
+                // Animate Score Counter
+                gsap.to({v:0}, {
+                    v: rawScore, duration: 2, ease: "power3.out",
+                    onUpdate: function() { 
+                        document.getElementById('score-text').innerText = Math.floor(this.targets()[0].v).toLocaleString(); 
+                    },
+                    onComplete: () => calculatePriceLogic(rawScore)
+                });
             };
         }
 
-        function animateScore(target) {
-            gsap.to({v:0}, {
-                v: target, duration: 3, ease: "power4.out",
-                onUpdate: function() { document.getElementById('score-text').innerText = Math.floor(this.targets()[0].v).toLocaleString(); },
-                onComplete: () => finalizeValuation(target)
-            });
-        }
-
-        function finalizeValuation(score) {
+        // ==========================================
+        // ADVANCED PRICING ALGORITHM (Highly Realistic)
+        // ==========================================
+        function calculatePriceLogic(score) {
             const brand = document.getElementById('brand-select').value;
             const sub1 = document.getElementById('sub1-select').value;
             const sub2 = document.getElementById('sub2-select').value;
-            const cond = parseFloat(document.getElementById('condition').value);
+            const condMultiplier = parseFloat(document.getElementById('condition').value);
             
-            let base = DB[currentMode][brand][sub1][sub2];
+            let basePrice = DB[currentMode][brand][sub1][sub2];
             
-            // Intelligence Logic: Health check multiplier
-            let health = Math.min(score / 5000, 1.15); 
-            
-            // Age Penalty logic based on strings
-            let lowerSub1 = sub1.toLowerCase();
-            let agePenalty = (lowerSub1.includes('legacy') || lowerSub1.includes('2015') || lowerSub1.includes('6th') || lowerSub1.includes('7th')) ? 0.7 : 1.0;
-            
-            let final = base * cond * health * agePenalty;
+            // 1. Age Penalty Logic based on Generation names in the string
+            let sub1Low = sub1.toLowerCase();
+            let agePenalty = 1.0;
+            if(sub1Low.includes('legacy') || sub1Low.includes('older') || sub1Low.includes('10th') || sub1Low.includes('900')) {
+                agePenalty = 0.85; // Additional 15% drop for very old tech
+            }
 
-            gsap.to({v:0}, {
-                v: final, duration: 2,
-                onUpdate: function() { 
-                    document.getElementById('price-val').innerText = "$" + Math.floor(final < 10 ? 10 : final).toLocaleString(); 
+            // 2. Health / Performance Mod (If CPU is thermal throttling, score is low, drop price 5%)
+            let healthMod = Math.min(Math.max((score / 15000), 0.95), 1.02);
+
+            let exactFinalPrice = basePrice * condMultiplier * agePenalty * healthMod;
+            if(exactFinalPrice < 20) exactFinalPrice = 20; // Minimum floor price
+
+            // Fluctuation Animation (Simulating Live Stock Market)
+            let dummyObj = { val: exactFinalPrice * 0.5 }; // Start from 50%
+            
+            gsap.to(dummyObj, {
+                val: exactFinalPrice, 
+                duration: 2.5, 
+                ease: "power2.out",
+                onUpdate: () => {
+                    // Add random jitter to make it look alive during calculation
+                    let jitter = exactFinalPrice * (Math.random() * 0.04 - 0.02); 
+                    let displayNum = Math.floor(dummyObj.val + jitter);
+                    document.getElementById('price-val').innerText = displayNum.toLocaleString();
+                },
+                onComplete: () => {
+                    // Settle on exact price
+                    document.getElementById('price-val').innerText = Math.floor(exactFinalPrice).toLocaleString();
+                    
+                    // Reset Button
+                    const btn = document.getElementById('run-btn');
+                    btn.innerText = "Re-Scan Hardware";
+                    btn.disabled = false;
+
+                    // Generate Unique Report ID
+                    const dateStr = new Date().toISOString().slice(0,10).replace(/-/g,"");
+                    const randomHash = Math.random().toString(36).substr(2, 6).toUpperCase();
+                    document.getElementById('report-id').innerText = `TITAN-${dateStr}-${randomHash}`;
+                    
+                    // Flash the price
+                    gsap.fromTo("#price-val", {scale: 1.1, color: "#fff"}, {scale: 1, color: "", duration: 0.5});
                 }
             });
-            
-            document.getElementById('report-id').innerText = "TITAN-MAX-ID-" + Math.random().toString(36).substr(2, 10).toUpperCase();
         }
 
-        // Initialize Global State
+        // Initialize First Load
         initSelections();
     </script>
 </body>
