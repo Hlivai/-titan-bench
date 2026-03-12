@@ -3,139 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITAN v5.0 | Professional Real-Time Valuation</title>
+    <title>TITAN v5.2 PRO | The Complete Hardware Archive</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #22c55e; --accent: #3b82f6; }
-        body { background: #020205; color: white; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-        
-        /* High-End Cyber Background */
-        .cyber-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 90%, rgba(34, 197, 94, 0.1) 0%, transparent 40%);
-        }
-
-        .glass { 
-            background: rgba(255, 255, 255, 0.02); 
-            backdrop-filter: blur(60px) saturate(180%);
-            -webkit-backdrop-filter: blur(60px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 35px;
-            transition: 0.4s ease;
-        }
-
-        .input-glass {
-            background: #08080c !important; 
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff !important;
-            padding: 14px;
-            border-radius: 18px;
-            width: 100%;
-            outline: none;
-            font-size: 12px;
-            appearance: none;
-            cursor: pointer;
-        }
-        
+        body { background: #010103; color: white; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        .cyber-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.12) 0%, transparent 45%), radial-gradient(circle at 90% 90%, rgba(34, 197, 94, 0.12) 0%, transparent 45%); }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(60px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 35px; }
+        .input-glass { background: #08080c !important; border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff !important; padding: 14px; border-radius: 18px; width: 100%; outline: none; font-size: 12px; appearance: none; }
         select option { background-color: #08080c; color: white; }
-
-        .price-text { 
-            font-family: 'Orbitron', sans-serif; 
-            background: linear-gradient(to bottom, #fff, var(--primary)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            filter: drop-shadow(0 0 30px rgba(34, 197, 94, 0.5));
-        }
-
-        .nav-tab {
-            cursor: pointer; padding: 14px 20px; border-radius: 20px; transition: 0.4s;
-            color: #555; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
-        }
-        .nav-tab.active { background: white; color: black; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-
-        .titan-btn { 
-            background: linear-gradient(45deg, #fff, #e2e8f0); color: black; font-weight: 900; 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .price-text { font-family: 'Orbitron', sans-serif; background: linear-gradient(to bottom, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(34, 197, 94, 0.5)); }
+        .nav-tab { cursor: pointer; padding: 14px 20px; border-radius: 20px; transition: 0.4s; color: #555; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
+        .nav-tab.active { background: white; color: black; box-shadow: 0 0 25px rgba(255,255,255,0.2); transform: scale(1.05); }
+        .titan-btn { background: linear-gradient(45deg, #fff, #e2e8f0); color: black; font-weight: 900; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .titan-btn:hover { transform: scale(1.03); box-shadow: 0 0 40px rgba(255,255,255,0.2); }
-
-        .scan-line {
-            position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: scan 2s linear infinite; display: none;
-        }
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: scan 2s linear infinite; display: none; }
         @keyframes scan { 0% { top: 0% } 100% { top: 100% } }
     </style>
 </head>
 <body class="pb-20">
     <div class="cyber-bg"></div>
 
-    <!-- Ad Space -->
-    <div class="w-full flex justify-center p-4">
-        <div class="max-w-5xl w-full h-24 glass flex items-center justify-center text-[10px] text-gray-700 uppercase tracking-[0.5em]">
-            AdSense Header Placement
-        </div>
-    </div>
-
     <nav class="w-full max-w-6xl mx-auto p-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="text-3xl font-black tracking-tighter uppercase italic">Titan <span class="text-green-500 underline">v5.0 PRO</span></div>
-        <div class="flex glass p-1.5 gap-1.5 w-full md:w-auto overflow-x-auto">
-            <div onclick="setMode('phone')" id="tab-phone" class="nav-tab active flex-1 text-center">Mobile</div>
-            <div onclick="setMode('laptop')" id="tab-laptop" class="nav-tab flex-1 text-center">Laptop</div>
-            <div onclick="setMode('pc')" id="tab-pc" class="nav-tab flex-1 text-center">PC Build</div>
-            <div onclick="setMode('cpu')" id="tab-cpu" class="nav-tab flex-1 text-center">CPU</div>
-            <div onclick="setMode('gpu')" id="tab-gpu" class="nav-tab flex-1 text-center">GPU</div>
+        <div class="text-3xl font-black tracking-tighter uppercase italic">Titan <span class="text-green-500 underline">v5.2 PRO</span></div>
+        <div class="flex glass p-1.5 gap-1 w-full md:w-auto overflow-x-auto no-scrollbar">
+            <div onclick="setMode('phone')" id="tab-phone" class="nav-tab active">Mobile</div>
+            <div onclick="setMode('laptop')" id="tab-laptop" class="nav-tab">Laptop</div>
+            <div onclick="setMode('pc')" id="tab-pc" class="nav-tab">PC Build</div>
+            <div onclick="setMode('cpu')" id="tab-cpu" class="nav-tab">CPU</div>
+            <div onclick="setMode('gpu')" id="tab-gpu" class="nav-tab">GPU</div>
         </div>
     </nav>
 
     <main class="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 mt-6">
-        <!-- Sidebar Selection -->
-        <div class="lg:col-span-5 space-y-6">
-            <div class="glass p-8 relative overflow-hidden shadow-2xl">
-                <h2 id="config-title" class="text-[10px] font-black text-gray-500 uppercase tracking-[0.5em] mb-10 italic">Hardware DNA Scan</h2>
-                <div class="space-y-5">
+        <div class="lg:col-span-5">
+            <div class="glass p-10 space-y-6 shadow-2xl relative" id="input-card">
+                <h2 id="mode-title" class="text-[10px] font-black text-gray-500 uppercase tracking-[0.5em] mb-10 italic">Phone Audit Config</h2>
+                <div class="space-y-6">
                     <div>
-                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-2 block ml-2">Brand / Origin</label>
+                        <label id="label-1" class="text-[9px] text-gray-400 uppercase font-bold mb-2 block ml-2">Brand</label>
                         <select id="brand-select" class="input-glass" onchange="updateSub1()"></select>
                     </div>
                     <div>
-                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-2 block ml-2">Release Era / Series</label>
+                        <label id="label-2" class="text-[9px] text-gray-400 uppercase font-bold mb-2 block ml-2">Series</label>
                         <select id="sub1-select" class="input-glass" onchange="updateSub2()"></select>
                     </div>
                     <div>
-                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-2 block ml-2">Specific Tier / SKU</label>
+                        <label id="label-3" class="text-[9px] text-gray-400 uppercase font-bold mb-2 block ml-2">Model</label>
                         <select id="sub2-select" class="input-glass"></select>
                     </div>
                     <div class="pt-6 border-t border-white/5">
-                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-2 block ml-2">Operational Integrity</label>
+                        <label class="text-[9px] text-gray-400 uppercase font-bold mb-2 block ml-2">Condition</label>
                         <select id="condition" class="input-glass">
-                            <option value="1">100% Brand New / Sealed</option>
-                            <option value="0.92">Excellent / Like New</option>
-                            <option value="0.80">Good / Normal Signs</option>
-                            <option value="0.50">Damaged / Needs Repair</option>
+                            <option value="1">100% Brand New</option>
+                            <option value="0.92">92% Excellent</option>
+                            <option value="0.80">80% Good / Used</option>
+                            <option value="0.50">Below 50% Damaged</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Reality Audit Section -->
         <div class="lg:col-span-7 space-y-8">
-            <div class="glass p-12 text-center relative overflow-hidden group">
+            <div class="glass p-12 text-center relative overflow-hidden">
                 <div id="scan-line" class="scan-line"></div>
                 <div class="mb-4 text-[10px] text-gray-500 uppercase tracking-widest font-black italic">Stress Index (150M Real Ops)</div>
                 <div id="score-text" class="text-9xl font-black font-mono tracking-tighter mb-10">0</div>
-                <button onclick="runRealAudit()" id="run-btn" class="titan-btn w-full py-7 rounded-3xl text-xl uppercase tracking-widest">Execute Real-Time Audit</button>
-                <div id="status" class="mt-6 text-[9px] text-gray-600 font-bold uppercase tracking-widest animate-pulse">System Waiting for Signal...</div>
+                <button onclick="runRealAudit()" id="run-btn" class="titan-btn w-full py-7 rounded-3xl text-xl uppercase tracking-widest">Execute AI Audit</button>
+                <div id="status" class="mt-6 text-[9px] text-gray-600 font-bold uppercase tracking-widest">System Ready</div>
             </div>
 
             <div class="glass p-12 min-h-[320px] flex flex-col items-center justify-center relative">
-                <div class="absolute top-8 left-8 text-[10px] font-black text-gray-800 uppercase italic">Titan Market Index ($)</div>
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.5em] mb-6 tracking-[0.3em]">Market Valuation Index</p>
                 <div id="price-val" class="price-text text-8xl md:text-9xl font-black tracking-tighter">$0</div>
-                <div class="mt-10 text-[9px] text-gray-500 font-bold border border-white/5 px-8 py-3 rounded-full uppercase" id="val-id">TITAN-REALITY-ENGINE-ACTIVE</div>
+                <div class="mt-10 text-[9px] text-gray-400 uppercase font-black tracking-widest border border-white/5 px-8 py-3 rounded-full" id="val-id">TITAN-v9.2-CORE</div>
             </div>
         </div>
     </main>
@@ -145,48 +89,32 @@
         const DB = {
             phone: {
                 Apple: { 
-                    "iPhone 17 Series (2026)": { "17 Pro Max": 1450, "17 Pro": 1200, "17 Plus": 1000, "17 Standard": 900 },
-                    "iPhone 15/16 Series": { "16 Pro Max": 1150, "16 Pro": 1000, "15 Pro Max": 950, "15 Standard": 650 }, 
-                    "iPhone 13/14 Series": { "14 Pro Max": 750, "13 Pro": 550, "13 Normal": 400 },
-                    "Legacy (2015-18)": { "XS Max": 150, "iPhone X": 120, "iPhone 8 Plus": 80, "iPhone 6s": 30 }
+                    "iPhone 17 Series (2026)": { "17 Pro Max": 1450, "17 Pro": 1200, "17 Plus": 1000 },
+                    "iPhone 15/16 Series": { "16 Pro Max": 1150, "15 Pro Max": 950, "15 Standard": 650 }, 
+                    "Legacy (2015-18)": { "iPhone 11 Pro": 350, "XS Max": 150, "iPhone 6s": 30 }
                 },
                 Samsung: { 
-                    "Galaxy S25/S26 (2025/26)": { "S26 Ultra": 1400, "S25 Ultra": 1200, "S25 Plus": 950 }, 
+                    "Galaxy S25/S26 (2025/26)": { "S26 Ultra": 1400, "S25 Ultra": 1200 }, 
                     "Galaxy S22-S24 Series": { "S24 Ultra": 1000, "S23 Ultra": 750, "S22 Ultra": 500 }, 
-                    "Legacy S-Series (2015+)": { "S20 Ultra": 200, "S10 Plus": 120, "S6 Edge": 30 }
+                    "Legacy S-Series": { "S10 Plus": 120, "S6 Edge": 30 }
                 },
-                Xiaomi: {
-                    "Xiaomi 14/15/16 Series": { "16 Ultra (2026)": 1300, "15 Ultra": 1100, "14 Pro": 800 },
-                    "Poco Series": { "Poco F6 Pro": 450, "Poco X6 Pro": 300, "Poco X3 Pro": 120 }
-                },
-                Huawei_Honor: { 
-                    "Honor Magic Series": { "Magic 6 Pro": 950, "Magic 5 Pro": 700 }, 
-                    "Huawei P & Mate": { "Pura 70 Ultra": 1100, "Mate 50 Pro": 600, "P30 Pro": 180 }
-                },
-                Infinix_Tecno: { 
-                    "Infinix Zero/GT": { "GT 20 Pro": 340, "Zero 30 5G": 300 }, 
-                    "Infinix Note": { "Note 40 Pro+": 320, "Note 10": 80 }
-                }
+                Xiaomi: { "Xiaomi 15/16 Series": { "16 Ultra (2026)": 1300, "15 Ultra": 1100 }, "Poco Series": { "F6 Pro": 450, "X6 Pro": 300 } },
+                Honor: { "Magic Series": { "Magic 6 Pro": 950, "Magic 5 Pro": 700 }, "X / Number": { "Honor 90": 350, "X9b": 250 } },
+                Infinix: { "Zero/GT Series": { "GT 20 Pro": 340, "Zero 30": 300 }, "Note Series": { "Note 40 Pro+": 320 } }
             },
             laptop: {
-                Gaming_Performance: { 
+                Gaming_Laptops: { 
                     "RTX 40/50 Series (2024-26)": { "i9 + RTX 5090 Mobile": 4000, "i9 + RTX 4090 Mobile": 2900, "i7 + RTX 4060": 1100 }, 
                     "RTX 30 Series": { "Ryzen 7 + RTX 3070": 750, "i5 + RTX 3050": 450 },
                     "Legacy Gaming": { "GTX 1060 Mobile": 250, "GTX 830M / 850M (2014)": 100 }
                 },
-                Apple_MacBook: { 
-                    "M3 / M4 (Next Gen)": { "M4 Max (2025)": 3500, "M3 Pro": 1800, "M1 Air": 550 },
-                    "Intel MacBook (Legacy)": { "i9 Pro 16-inch": 400, "i5 (2017)": 180 } 
-                }
+                Apple_MacBook: { "M3 / M4 (Next Gen)": { "M4 Max (2025)": 3500, "M3 Pro": 1800 }, "M1 / M2": { "M2 Max": 2400, "M1 Air": 550 } }
             },
             pc: {
-                Extreme_Desktop: { 
-                    "2025/2026 Future": { "Ultra 9 285K + RTX 5090": 4800, "Ryzen 9 9950X + RTX 5090": 4700 }, 
-                    "2023/2024 Builds": { "i9-14900K + RTX 4090": 3500, "i7-14700K + RTX 4080S": 2200 }
-                },
-                Budget_Desktop: { 
-                    "Mid-Range Recent": { "i5-13400F + RTX 4060": 900 },
-                    "Legacy PC (2015-18)": { "i7-4790K + GTX 980 Ti": 180, "i5-4460 + GTX 960": 90 }
+                Desktop_Builds: { 
+                    "2025/2026 Builds": { "Ultra 9 285K + RTX 5090": 4800, "Ryzen 9 9950X + RTX 5090": 4700 }, 
+                    "2023/2024 Builds": { "i9-14900K + RTX 4090": 3500, "i7-14700K + RTX 4080S": 2200 },
+                    "Legacy PC": { "i7-4790K + GTX 980 Ti": 180, "i5-4460 + GTX 960": 90 }
                 }
             },
             cpu: {
@@ -196,7 +124,7 @@
                     "Legacy (4th-9th Gen)": { "i9-9900K": 150, "i7-4790K": 40 }
                 },
                 AMD: {
-                    "Ryzen 9000/AI 300": { "9950X": 650, "AI 9 HX 370": 650 },
+                    "Ryzen 9000 / AI 300": { "9950X": 650, "AI 9 HX 370": 650 },
                     "Ryzen 3000-7000": { "7950X3D": 550, "3600": 60 },
                     "FX Series (2015)": { "FX-8350": 20 }
                 }
@@ -205,25 +133,38 @@
                 Nvidia: {
                     "RTX 50 Series (2025/26)": { "RTX 5090": 2200, "RTX 5080": 1200 },
                     "RTX 40 Series": { "RTX 4090": 1800, "RTX 4060": 280 },
-                    "Legacy GTX": { "GTX 1080 Ti": 150, "GTX 980 Ti": 70, "GTX 830M / 850M (Laptop)": 20 }
+                    "Legacy GTX": { "GTX 1080 Ti": 150, "GTX 980 Ti": 70, "GTX 830M (Laptop)": 20 }
                 },
-                AMD_Radeon: {
-                    "RX 7000/8000 Series": { "RX 8900 XTX": 1000, "RX 7900 XTX": 900 },
-                    "Classic": { "RX 580 8GB": 50, "R9 Fury X": 50 }
-                },
-                Intel_Arc: { "Battlemage (2025)": { "Arc B770": 300 }, "Alchemist (2022)": { "Arc A770": 220 } }
+                AMD_Radeon: { "RX 7000/8000 Series": { "RX 8900 XTX": 1000, "RX 7900 XTX": 900 }, "Classic": { "RX 580 8GB": 50 } }
             }
+        };
+
+        const modeLabels = {
+            phone: ["Brand", "Series", "Model"],
+            laptop: ["Category", "Series", "Hardware Setup"],
+            pc: ["Build Era", "Configuration", "Components"],
+            cpu: ["Manufacturer", "Architecture", "Tier / SKU"],
+            gpu: ["Brand", "Series", "Model Name"]
         };
 
         let currentMode = 'phone';
 
         function setMode(mode) {
             currentMode = mode;
+            
+            // 1. Update Tabs
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById('tab-' + mode).classList.add('active');
+            
+            // 2. Update Card UI Text
             document.getElementById('mode-title').innerText = mode.toUpperCase() + " AUDIT CONFIG";
+            document.getElementById('label-1').innerText = modeLabels[mode][0];
+            document.getElementById('label-2').innerText = modeLabels[mode][1];
+            document.getElementById('label-3').innerText = modeLabels[mode][2];
+            
+            // 3. Re-init selections with animation
+            gsap.fromTo("#input-card", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4 });
             initSelections();
-            gsap.from(".glass", { opacity: 0, scale: 0.98, duration: 0.4 });
         }
 
         function initSelections() {
@@ -249,47 +190,34 @@
             Object.keys(DB[currentMode][brand][sub1]).forEach(m => sub2Sel.innerHTML += `<option value="${m}">${m}</option>`);
         }
 
-        // --- TITAN REALITY STRESS ENGINE (150M Operations) ---
+        // --- STRESS ENGINE ---
         const workerBlob = new Blob([`
             self.onmessage = function() {
                 let start = performance.now();
-                let x = 0;
-                for(let i=0; i<150000000; i++) { 
-                    x += Math.sin(i) * Math.cos(i) + Math.sqrt(i);
-                }
+                for(let i=0; i<150000000; i++) { Math.sin(i) * Math.sqrt(i); }
                 self.postMessage(performance.now() - start);
             }
         `], {type: 'application/javascript'});
 
         function runRealAudit() {
             const btn = document.getElementById('run-btn');
-            const status = document.getElementById('status');
             const scanLine = document.getElementById('scan-line');
-            
             btn.disabled = true; btn.style.opacity = 0.3;
-            status.innerText = "Audit in progress: 150M Floating-Point Operations...";
             scanLine.style.display = "block";
             
             const w = new Worker(URL.createObjectURL(workerBlob));
             w.postMessage('go');
-            
             w.onmessage = function(e) {
-                // Real score calculation based on processing speed
                 const score = Math.floor(5000000 / e.data);
-                animateScore(score);
+                gsap.to({v:0}, {
+                    v: score, duration: 2.5, ease: "power4.out",
+                    onUpdate: function() { document.getElementById('score-text').innerText = Math.floor(this.targets()[0].v).toLocaleString(); },
+                    onComplete: () => finalizeValuation(score)
+                });
                 w.terminate();
                 btn.disabled = false; btn.style.opacity = 1;
                 scanLine.style.display = "none";
-                status.innerText = "Audit Success. Valuation Synced.";
             };
-        }
-
-        function animateScore(target) {
-            gsap.to({v:0}, {
-                v: target, duration: 2.5, ease: "power4.out",
-                onUpdate: function() { document.getElementById('score-text').innerText = Math.floor(this.targets()[0].v).toLocaleString(); },
-                onComplete: () => finalizeValuation(target)
-            });
         }
 
         function finalizeValuation(score) {
@@ -299,24 +227,13 @@
             const cond = parseFloat(document.getElementById('condition').value);
             
             let base = DB[currentMode][brand][sub1][sub2];
-            
-            // Professional Logic: Health check multiplier
-            // High-end hardware scores around 5000+. Budget scores around 1000.
-            let healthFactor = Math.min(score / 4800, 1.15); 
-            
-            // Age Depreciation Logic: If older than 5 years, price drops extra
-            let isLegacy = sub1.toLowerCase().includes('legacy') || sub1.toLowerCase().includes('classic');
-            let agePenalty = isLegacy ? 0.7 : 1.0;
-
-            let final = base * cond * healthFactor * agePenalty;
+            let health = Math.min(score / 4800, 1.15); 
+            let final = base * cond * health;
 
             gsap.to({v:0}, {
                 v: final, duration: 2,
-                onUpdate: function() { 
-                    document.getElementById('price-val').innerText = "$" + Math.floor(final < 10 ? 10 : final).toLocaleString(); 
-                }
+                onUpdate: function() { document.getElementById('price-val').innerText = "$" + Math.floor(final < 10 ? 10 : final).toLocaleString(); }
             });
-            document.getElementById('val-id').innerText = "TITAN-REAL-ID-" + Math.random().toString(36).substr(2, 9).toUpperCase();
         }
 
         initSelections();
