@@ -53,7 +53,6 @@
 <body class="min-h-screen pb-10">
     <div class="cyber-bg"></div>
 
-    <!-- Ad Header -->
     <div class="w-full max-w-6xl mx-auto p-4 flex justify-center">
         <div class="w-full h-24 glass-panel flex items-center justify-center text-[10px] text-gray-700 uppercase tracking-[0.5em]">
             AdSense Header (728x90)
@@ -74,13 +73,11 @@
 
     <main class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        <!-- Selection Logic -->
         <div class="lg:col-span-5 space-y-6">
             <div class="glass-panel p-10 space-y-6 shadow-2xl">
                 <h2 id="mode-title" class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] mb-4 italic">Hardware Selection</h2>
                 
                 <div class="space-y-5" id="dynamic-selectors">
-                    <!-- Dropdowns will be injected here -->
                     <div>
                         <label class="text-[9px] font-bold uppercase text-gray-500 ml-4 mb-2 block">Brand / Manufacturer</label>
                         <select id="brand-select" class="input-box" onchange="updateSub1()"></select>
@@ -90,7 +87,7 @@
                         <select id="sub1-select" class="input-box" onchange="updateSub2()"></select>
                     </div>
                     <div>
-                        <label class="text-[9px] font-bold uppercase text-gray-500 ml-4 mb-2 block">Tier (i3/i5/i7/i9 or Model)</label>
+                        <label class="text-[9px] font-bold uppercase text-gray-500 ml-4 mb-2 block">Tier / Model</label>
                         <select id="sub2-select" class="input-box"></select>
                     </div>
                     <div>
@@ -106,7 +103,6 @@
             </div>
         </div>
 
-        <!-- Result Column -->
         <div class="lg:col-span-7 space-y-8">
             <div class="glass-panel p-12 text-center relative overflow-hidden">
                 <div class="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6 italic">Multi-Threaded Performance Index</div>
@@ -125,7 +121,7 @@
 
     <footer class="max-w-6xl mx-auto mt-20 p-10 border-t border-white/5 text-center">
         <p class="text-[10px] text-gray-600 leading-loose uppercase tracking-widest">
-            Titan v8.0 Architecture: Real-time calculation based on 120M hardware operations per second. Supported brands: Nvidia, AMD, Intel, Apple, Honor, Infinix, and more. 2015-2026 Dataset.
+            Titan v8.0 Architecture: Real-time calculation based on 120M hardware operations per second. Supported brands: Nvidia, AMD, Intel. 2014-2026 Dataset.
         </p>
     </footer>
 
@@ -133,49 +129,75 @@
         // --- THE MASTER ENCYCLOPEDIA DATABASE (v8.0) ---
         const DB = {
             phone: {
-                Apple: { "iPhone 17 Series (2026)": { "Pro Max": 1450, "Pro": 1200 }, "iPhone 15/16 Series": { "16 Pro Max": 1150, "15 Pro Max": 950 }, "Older": { "iPhone 12": 450, "iPhone X": 180 } },
+                Apple: { "iPhone 17 Series (2026)": { "Pro Max": 1450, "Pro": 1200 }, "iPhone 15/16 Series": { "16 Pro Max": 1150, "15 Pro Max": 950 }, "Legacy": { "iPhone 12": 450, "iPhone X": 180 } },
                 Samsung: { "S25/S26 (Next)": { "S26 Ultra (Pre)": 1400, "S25 Ultra": 1200 }, "S22-S24 Series": { "S24 Ultra": 1000, "S23 Ultra": 800 }, "Legacy": { "S10 Plus": 150, "S8": 80 } },
                 Honor: { "Magic Series": { "Magic 6 Pro": 1000, "Magic 5 Pro": 750 }, "Number Series": { "Honor 90": 400, "Honor X9b": 280 } },
                 Infinix: { "Zero/GT Series": { "Zero 30": 350, "GT 20 Pro": 340 }, "Note Series": { "Note 40 Pro": 300, "Note 12": 150 } }
             },
             laptop: {
-                AppleMac: { "M3/M4 Series": { "M4 Max": 3500, "M3 Max": 2800 }, "M1/M2 Series": { "M2 Chip": 1100, "M1 Air": 700 } },
-                Windows_Laptop: { "RTX 40 Series": { "i9 HX + 4090": 3500, "i7 H + 4070": 1800 }, "Legacy": { "GTX 1650": 600, "GTX 830M / 940M": 120 } }
+                Gaming_Laptops: { 
+                    "RTX 40 Series": { "i9 HX + RTX 4090 + 32GB RAM": 2800, "i7 H + RTX 4060 + 16GB RAM": 1100 }, 
+                    "RTX 30 Series": { "Ryzen 7 + RTX 3070 + 16GB RAM": 750, "i5 H + RTX 3050 + 8GB RAM": 450 },
+                    "Legacy Gaming (GTX)": { "i7 HQ + GTX 1060 + 16GB RAM": 250, "i7 (4th Gen) + GTX 850M + 8GB RAM": 130 }
+                },
+                Work_Business: { 
+                    "Apple Silicon": { "M3 Max MacBook Pro": 3200, "M1 MacBook Air": 650 }, 
+                    "Intel/AMD Ultrabooks": { "Core Ultra 7 + 16GB": 1000, "Ryzen 5 U-Series + 8GB": 350 } 
+                }
             },
             pc: {
-                Build_2024_2026: { "High-End": { "i9 + RTX 4090": 3800, "Ultra 2 + RTX 5090": 4500 }, "Mid-Range": { "i5 + RTX 4060": 1200 } },
-                Legacy_Builds: { "GTX Series": { "i7 + GTX 1080Ti": 500, "i5 + GTX 960": 250 } }
+                Desktop_Builds: { 
+                    "Enthusiast (2025/2026)": { "Ultra 285K + RTX 5090": 4500, "Ryzen 9950X + RTX 4090": 3800 }, 
+                    "Mid-Range": { "i5-13400F + RTX 4060": 900, "Ryzen 5 5600 + RX 6600": 550 },
+                    "Budget / Legacy": { "i7-8700K + GTX 1080": 300, "i7-4790K + GTX 960": 150 }
+                }
             },
             cpu: {
                 Intel_Desktop: { 
-                    "Core Ultra 2 (2025)": { "Ultra 9": 650, "Ultra 7": 450 },
-                    "14th Gen": { "i9-14900K": 580, "i7-14700K": 400, "i5-14600K": 300 },
-                    "10th-12th Gen": { "i9-12900K": 350, "i7-10700K": 200 },
-                    "6th-9th Gen (2015+)": { "i7-8700K": 150, "i7-6700K": 100 }
-                },
-                AMD_Desktop: {
-                    "Ryzen 9000 (Zen 5)": { "Ryzen 9": 600, "Ryzen 7": 400 },
-                    "Ryzen 7000": { "7950X3D": 650, "7800X3D": 450 },
-                    "Ryzen 1000-5000": { "5950X": 350, "1600 (2017)": 50 }
+                    "Core Ultra 2 (Arrow Lake)": { "Ultra 9 285K": 600, "Ultra 7 265K": 400 },
+                    "13th/14th Gen": { "i9-14900K": 550, "i7-13700K": 320, "i5-13600K": 220 },
+                    "10th-12th Gen": { "i9-12900K": 300, "i7-10700K": 150, "i5-12400F": 130 },
+                    "4th-9th Gen (Legacy)": { "i9-9900K": 140, "i7-8700K": 100, "i7-4790K (4th Gen)": 40 }
                 },
                 Intel_Mobile: {
-                    "Core Ultra 2 (Laptop)": { "Ultra 9 HX": 700, "Ultra 7 U (Thin)": 450 },
-                    "14th Gen HX": { "i9-14900HX": 650, "i7-14700HX": 450 }
+                    "Core Ultra Series": { "Ultra 9 185H (Perf)": 700, "Ultra 7 155H": 500, "Ultra 5 125U (Power Saving)": 350 },
+                    "12th-14th Gen": { "i9-14900HX (Extreme)": 650, "i7-12700H": 220, "i5-1255U": 130 },
+                    "Legacy Mobile": { "i7-11800H": 160, "i7-9750H": 90, "i7-4720HQ (Haswell)": 40 }
+                },
+                AMD_Desktop: {
+                    "Ryzen 9000/7000": { "9950X": 650, "7800X3D": 350, "7600X": 180 },
+                    "Ryzen 5000/3000": { "5950X": 300, "5800X3D": 250, "3600": 60 },
+                    "Ryzen 1000/FX": { "2700X": 60, "1600": 30, "FX-8350": 20 }
+                },
+                AMD_Mobile: {
+                    "Ryzen AI 300 Series": { "AI 9 HX 370": 700, "AI 9 365": 550 },
+                    "Ryzen 7000/8000": { "7945HX": 500, "7840HS": 350, "7530U": 200 },
+                    "Ryzen 3000-6000": { "6900HX": 280, "5800H": 180, "4800H": 120 }
                 }
             },
             gpu: {
                 Nvidia_Desktop: {
-                    "RTX 50 Series (Next)": { "RTX 5090": 2200, "RTX 5080": 1300 },
-                    "RTX 40 Series": { "RTX 4090": 1900, "RTX 4060": 300 },
-                    "GTX 900-10 Series": { "GTX 1080 Ti": 220, "GTX 960": 70 }
+                    "RTX 50 Series (2025/26)": { "RTX 5090": 2200, "RTX 5080": 1200, "RTX 5070": 700 },
+                    "RTX 40 Series": { "RTX 4090": 1800, "RTX 4080 Super": 1000, "RTX 4070 Ti": 750, "RTX 4060": 280 },
+                    "RTX 20 & 30 Series": { "RTX 3090 Ti": 800, "RTX 3060": 180, "RTX 2060": 120 },
+                    "GTX 10 & 16 Series": { "GTX 1080 Ti": 150, "GTX 1660 Ti": 90, "GTX 1060 6GB": 50 },
+                    "GTX 900 Series": { "GTX 980 Ti": 70, "GTX 970": 40, "GTX 960": 25 }
                 },
                 Nvidia_Laptop: {
-                    "RTX 40/50 Mobile": { "4090 Laptop GPU": 1600, "4060 Laptop GPU": 600 },
-                    "MX / Legacy Mobile": { "MX570": 150, "GTX 960M": 80, "GTX 830M": 40 }
+                    "RTX 40/50 Mobile": { "RTX 5090 Mobile": 1800, "RTX 4090 Mobile": 1500, "RTX 4060 Mobile": 500 },
+                    "RTX 20/30 Mobile": { "RTX 3070 Mobile": 350, "RTX 3050 Ti Mobile": 150, "RTX 2060 Mobile": 150 },
+                    "GTX 10/16 Mobile": { "GTX 1660 Ti Mobile": 120, "GTX 1060 Mobile": 70, "GTX 1050 Mobile": 35 },
+                    "GTX 800M/900M Series": { "GTX 980M": 50, "GTX 960M": 25, "GTX 860M": 20, "GTX 850M": 18 },
+                    "MX Series (Budget)": { "MX570": 60, "MX450": 40, "MX150": 15 }
                 },
-                AMD_Radeon: {
-                    "RX 7000/8000": { "RX 8900 (Pre)": 1100, "RX 7900 XTX": 900 },
-                    "Classic Rx": { "RX 580 8GB": 90, "R9 Fury (2015)": 70 }
+                AMD_Radeon_Desktop: {
+                    "RX 7000/8000 Series": { "RX 8900 XTX": 1000, "RX 7900 XTX": 900, "RX 7600": 250 },
+                    "RX 5000/6000 Series": { "RX 6800 XT": 380, "RX 6700 XT": 220, "RX 5700 XT": 130 },
+                    "Classic Rx & R9": { "RX 580 8GB": 45, "RX 570 4GB": 30, "R9 Fury X": 50 }
+                },
+                AMD_Radeon_Laptop: {
+                    "RX 6000M/7000M": { "RX 7900M": 800, "RX 6800M": 350, "RX 6600M": 180 },
+                    "RX 5000M & R-Series": { "RX 5600M": 120, "R9 M390X": 40, "R7 M370": 20 }
                 }
             }
         };
@@ -219,7 +241,7 @@
             });
         }
 
-        // --- TITAN CORE ENGINE v8.0 (120M Operations) ---
+        // --- TITAN CORE ENGINE v8.0 ---
         const workerBlob = new Blob([`
             self.onmessage = function() {
                 let start = performance.now();
@@ -262,14 +284,13 @@
             const cond = parseFloat(document.getElementById('condition').value);
             
             let base = DB[currentMode][brand][sub1][sub2];
-            // Precision Logic: Adjustment based on core health
             let health = Math.min(score / 4500, 1.12);
             let final = base * cond * health;
 
             gsap.to({v:0}, {
                 v: final, duration: 2,
                 onUpdate: function() { 
-                    document.getElementById('price-val').innerText = "$" + Math.floor(final < 20 ? 20 : final).toLocaleString(); 
+                    document.getElementById('price-val').innerText = "$" + Math.floor(final < 15 ? 15 : final).toLocaleString(); 
                 }
             });
             document.getElementById('val-id').innerText = "TITAN-V8-DBID-" + Math.random().toString(36).substr(2, 10).toUpperCase();
