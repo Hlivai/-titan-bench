@@ -3,210 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TITAN CORE | Phone Value & Hardware Checker</title>
+    <title>TITAN PRO | AI Hardware Valuation Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Orbitron:wght@900&display=swap');
-        
-        body {
-            background: #050505;
-            color: white;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-        }
-
-        .price-gradient {
-            background: linear-gradient(to right, #22c55e, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .neon-glow {
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
-        }
-
-        input, select {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            outline: none;
-        }
+        body { background: #020205; color: white; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 32px; transition: all 0.4s ease; }
+        .mode-card { cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease; }
+        .mode-card.active { border-color: #22c55e; background: rgba(34, 197, 94, 0.05); transform: scale(1.05); }
+        .price-text { font-family: 'Orbitron', sans-serif; background: linear-gradient(to bottom, #22c55e, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); background-size: 200% 100%; animation: shimmer 2s infinite; }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     </style>
 </head>
 <body class="flex flex-col items-center pb-20">
 
-    <!-- Navbar -->
     <nav class="w-full max-w-6xl p-8 flex justify-between items-center">
-        <div class="text-2xl font-extrabold tracking-tighter">TITAN <span class="text-green-500">VALUATION</span></div>
-        <div class="text-[10px] bg-white/10 px-3 py-1 rounded-full uppercase tracking-widest" id="device-tag">Detecting...</div>
+        <div class="text-2xl font-black tracking-tighter">TITAN <span class="text-green-500">PRO</span></div>
+        <div id="cpu-load" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest border border-white/10 px-4 py-2 rounded-full">System Idle</div>
     </nav>
 
-    <!-- Header Ads -->
-    <div class="w-full max-w-4xl px-4 mb-10">
-        <div class="h-24 glass flex items-center justify-center text-[10px] text-gray-600 uppercase tracking-widest">
-            AdSense Leaderboard (728x90)
+    <!-- Step 1: Device Selection -->
+    <section class="w-full max-w-4xl px-6 mb-12">
+        <h2 class="text-center text-gray-500 text-[10px] font-bold uppercase tracking-[0.4em] mb-8">Select Device Type</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div onclick="setMode('phone')" id="phone-mode" class="mode-card glass p-8 text-center active">
+                <div class="text-4xl mb-4">📱</div>
+                <h3 class="font-bold">Smartphone</h3>
+                <p class="text-[10px] text-gray-500 mt-2">iOS / Android Evaluation</p>
+            </div>
+            <div onclick="setMode('laptop')" id="laptop-mode" class="mode-card glass p-8 text-center">
+                <div class="text-4xl mb-4">💻</div>
+                <h3 class="font-bold">Laptop</h3>
+                <p class="text-[10px] text-gray-500 mt-2">MacBook / Notebook</p>
+            </div>
+            <div onclick="setMode('desktop')" id="desktop-mode" class="mode-card glass p-8 text-center">
+                <div class="text-4xl mb-4">🖥️</div>
+                <h3 class="font-bold">Desktop PC</h3>
+                <p class="text-[10px] text-gray-500 mt-2">Workstation / Gaming Rig</p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Main Section -->
-    <main class="w-full max-w-4xl px-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Step 2: Main Evaluation Area -->
+    <main class="w-full max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Left Side: Benchmark -->
-        <div class="glass p-8 flex flex-col items-center justify-center text-center">
-            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Step 1: Performance Audit</h2>
-            <div id="score-display" class="text-7xl font-black mb-2 font-mono">0</div>
-            <div class="text-[10px] text-purple-400 uppercase tracking-widest mb-8">Hardware Power Index</div>
+        <!-- Benchmark Glass -->
+        <div class="lg:col-span-7 glass p-10 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10 text-8xl font-black italic" id="bg-text">PHONE</div>
             
-            <button onclick="startAudit()" id="start-btn" class="w-full py-5 bg-white text-black rounded-2xl font-extrabold hover:scale-[1.02] transition-transform">
-                START SCAN
-            </button>
-            <p id="status" class="mt-4 text-[10px] text-gray-600 uppercase">System Ready</p>
+            <div class="flex flex-col items-center text-center py-12">
+                <div id="score-circle" class="w-48 h-48 rounded-full border-4 border-white/5 flex flex-col items-center justify-center relative mb-8">
+                    <div id="score-val" class="text-6xl font-black font-mono">0</div>
+                    <div class="text-[9px] text-gray-500 uppercase tracking-widest">Power Score</div>
+                    <svg class="absolute inset-0 w-full h-full -rotate-90">
+                        <circle id="progress" cx="96" cy="96" r="92" stroke="#22c55e" stroke-width="4" fill="transparent" stroke-dasharray="578" stroke-dashoffset="578" stroke-linecap="round" />
+                    </svg>
+                </div>
+                
+                <button onclick="runAudit()" id="action-btn" class="w-full max-w-xs py-5 bg-white text-black rounded-2xl font-black text-lg hover:scale-105 transition-all">RUN AI ANALYSIS</button>
+            </div>
+
+            <!-- Real-time Specs -->
+            <div class="grid grid-cols-3 gap-4 border-t border-white/5 pt-8 mt-4 text-center">
+                <div><p class="text-[9px] text-gray-500 uppercase">Cores</p><p id="spec-cores" class="font-bold">--</p></div>
+                <div><p class="text-[9px] text-gray-500 uppercase">Threads</p><p id="spec-threads" class="font-bold">--</p></div>
+                <div><p class="text-[9px] text-gray-500 uppercase">Platform</p><p id="spec-os" class="font-bold italic">--</p></div>
+            </div>
         </div>
 
-        <!-- Right Side: Evaluation Form -->
-        <div class="glass p-8 flex flex-col">
-            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Step 2: Physical Condition</h2>
-            
-            <div class="space-y-4 mb-8">
-                <div>
-                    <label class="text-[10px] text-gray-400 uppercase ml-2">Screen Condition</label>
-                    <select id="screen" class="w-full p-4 rounded-xl mt-1 text-sm">
-                        <option value="1">Like New (No Scratches)</option>
-                        <option value="0.8">Good (Small Scratches)</option>
-                        <option value="0.5">Cracked / Damaged</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-[10px] text-gray-400 uppercase ml-2">Battery Health (%)</label>
-                    <input id="battery" type="number" placeholder="e.g. 95" class="w-full p-4 rounded-xl mt-1 text-sm">
-                </div>
-                <div>
-                    <label class="text-[10px] text-gray-400 uppercase ml-2">Original Box & Accessories</label>
-                    <select id="extras" class="w-full p-4 rounded-xl mt-1 text-sm">
-                        <option value="50">Yes (Full Set)</option>
-                        <option value="0">No (Phone Only)</option>
-                    </select>
+        <!-- Inputs & Price Glass -->
+        <div class="lg:col-span-5 flex flex-col gap-8">
+            <div class="glass p-8 space-y-6">
+                <h2 class="text-[10px] font-bold text-green-500 uppercase tracking-widest">Market Adjustments</h2>
+                <div id="dynamic-inputs" class="space-y-4">
+                    <!-- Inputs change based on mode -->
                 </div>
             </div>
 
-            <!-- Result Box -->
-            <div id="result-box" class="mt-auto p-6 bg-white/5 rounded-2xl border border-white/10 hidden opacity-0">
-                <div class="text-xs text-gray-400 uppercase mb-1">Estimated Market Value</div>
-                <div id="price-result" class="text-4xl font-black price-gradient">$0</div>
-                <div class="text-[9px] text-gray-600 mt-2 italic">Calculated based on live market data and hardware health.</div>
+            <div class="glass p-8 text-center shimmer relative overflow-hidden">
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-2">Estimated Resale Value</p>
+                <div id="final-price" class="price-text text-6xl font-black tracking-tighter">$0</div>
+                <div class="mt-4 p-2 bg-white/5 rounded-lg text-[9px] text-gray-500 font-mono" id="valuation-id">ID: TITAN-PENDING</div>
             </div>
         </div>
     </main>
 
-    <!-- Bottom Ads -->
-    <div class="w-full max-w-4xl px-4 mt-10">
-        <div class="h-64 glass flex items-center justify-center text-[10px] text-gray-600 uppercase tracking-widest">
-            AdSense Rectangle (300x250 or Responsive)
-        </div>
-    </div>
-
-    <!-- SEO Content Section -->
-    <section class="w-full max-w-4xl px-8 mt-20">
-        <h3 class="text-2xl font-bold mb-6">How we calculate your phone's value?</h3>
-        <p class="text-gray-400 text-sm leading-loose mb-8">
-            Titan Valuation uses a proprietary algorithm that combines <b>CPU Multi-Core Performance</b> with real-world physical condition. 
-            When you sell your phone, buyers look for speed and reliability. Our tool ensures that your processor hasn't degraded over time, 
-            giving you a scientific proof of your device's worth. High scores on our Hardware Power Index mean your phone can still handle 
-            modern apps and AI tasks, increasing its resale value.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass p-6 text-center text-xs text-gray-500">Top Price: iPhone 15 Pro Max</div>
-            <div class="glass p-6 text-center text-xs text-gray-500">High Demand: Samsung S24 Ultra</div>
-            <div class="glass p-6 text-center text-xs text-gray-500">Best Value: Pixel 8 Pro</div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="w-full mt-20 p-10 border-t border-white/5 flex flex-col items-center gap-4">
-        <div class="flex gap-6 text-[10px] uppercase font-bold text-gray-500">
+    <!-- Footer SEO -->
+    <footer class="w-full max-w-4xl px-8 mt-20 text-center">
+        <div class="flex justify-center gap-8 text-[11px] font-bold text-gray-600 uppercase mb-8">
             <a href="privacy-policy.html">Privacy</a>
             <a href="terms.html">Terms</a>
             <a href="contact.html">Contact</a>
         </div>
-        <p class="text-[9px] text-gray-800">TITAN VALUATION v3.0 - AI PRICING ENGINE</p>
+        <p class="text-gray-700 text-[10px] leading-loose">
+            Titan Pro utilizes the <b>High-Resolution Hardware Concurrency API</b> to analyze processing throughput across different architectures. Whether evaluating an ARM-based <b>Smartphone</b>, a thermally-constrained <b>Laptop</b>, or a high-performance <b>Desktop PC</b>, our engine applies specific coefficients to match current global resale markets like eBay, Swappa, and Back Market.
+        </p>
     </footer>
 
     <script>
-        // اكتشاف نوع الجهاز
+        let currentMode = 'phone';
         const cores = navigator.hardwareConcurrency || 4;
-        const isMobile = /iPhone|Android/i.test(navigator.userAgent);
-        document.getElementById('device-tag').innerText = (isMobile ? "Mobile" : "Desktop") + " | " + cores + "-Core CPU";
 
-        // محرك الفحص
+        // Configuration per mode
+        const configs = {
+            phone: { bg: 'PHONE', base: 400, multiplier: 0.15, inputs: `
+                <label class="text-[9px] text-gray-500 uppercase block">Screen Condition</label>
+                <select id="adj1" class="w-full bg-white/5 p-3 rounded-xl text-sm border border-white/10 outline-none"><option value="1">Pristine</option><option value="0.7">Cracked</option></select>
+                <label class="text-[9px] text-gray-500 uppercase block mt-4">Battery Health %</label>
+                <input id="adj2" type="number" value="90" class="w-full bg-white/5 p-3 rounded-xl text-sm border border-white/10 outline-none">` 
+            },
+            laptop: { bg: 'LAPTOP', base: 800, multiplier: 0.25, inputs: `
+                <label class="text-[9px] text-gray-500 uppercase block">GPU Dedicated?</label>
+                <select id="adj1" class="w-full bg-white/5 p-3 rounded-xl text-sm border border-white/10 outline-none"><option value="1.3">Yes (Nvidia/AMD)</option><option value="1">No (Integrated)</option></select>
+                <label class="text-[9px] text-gray-500 uppercase block mt-4">RAM Capacity (GB)</label>
+                <input id="adj2" type="number" value="16" class="w-full bg-white/5 p-3 rounded-xl text-sm border border-white/10 outline-none">`
+            },
+            desktop: { bg: 'DESKTOP', base: 1200, multiplier: 0.4, inputs: `
+                <label class="text-[9px] text-gray-500 uppercase block">Market Demand</label>
+                <select id="adj1" class="w-full bg-white/5 p-3 rounded-xl text-sm border border-white/10 outline-none"><option value="1.1">Gaming Build</option><option value="0.9">Office PC</option></select>
+                <label class="text-[9px] text-gray-500 uppercase block mt-4">Power Supply (Watts)</label>
+                <input id="adj2" type="number" value="650" class="w-full bg-white/5 p-3 rounded-xl text-sm border border-white/10 outline-none">`
+            }
+        };
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+            document.getElementById(mode + '-mode').classList.add('active');
+            document.getElementById('bg-text').innerText = configs[mode].bg;
+            document.getElementById('dynamic-inputs').innerHTML = configs[mode].inputs;
+            gsap.from("#dynamic-inputs", { opacity: 0, y: 10, duration: 0.5 });
+        }
+
+        // Initialize
+        setMode('phone');
+        document.getElementById('spec-cores').innerText = cores;
+        document.getElementById('spec-threads').innerText = cores * 2;
+        document.getElementById('spec-os').innerText = navigator.platform.split(' ')[0];
+
         const workerBlob = new Blob([`
             self.onmessage = function() {
                 let start = performance.now();
                 let x = 0;
-                for(let i=0; i<50000000; i++) { x += Math.sqrt(i) * Math.atan(i); }
+                for(let i=0; i<60000000; i++) { x += Math.sqrt(i) * Math.log(i); }
                 self.postMessage(performance.now() - start);
             }
         `], {type: 'application/javascript'});
 
-        function startAudit() {
-            const btn = document.getElementById('start-btn');
-            const scoreDisplay = document.getElementById('score-display');
-            const status = document.getElementById('status');
+        function runAudit() {
+            const btn = document.getElementById('action-btn');
+            const loadText = document.getElementById('cpu-load');
+            const progress = document.getElementById('progress');
             
-            btn.disabled = true;
-            btn.classList.add('opacity-30');
-            status.innerText = "Analyzing CPU Integrity...";
+            btn.disabled = true; btn.innerText = "ANALYZING HARDWARE...";
+            loadText.innerText = "CPU AT 100% LOAD"; loadText.classList.add('text-red-500');
             
             const w = new Worker(URL.createObjectURL(workerBlob));
-            w.postMessage('start');
+            w.postMessage('go');
             
+            gsap.to(progress, { strokeDashoffset: 0, duration: 3, ease: "power2.inOut" });
+
             w.onmessage = function(e) {
                 const time = e.data;
-                const score = Math.floor((1000000 / time) * (cores / 2));
+                const score = Math.floor((1200000 / time) * (cores / 2));
                 
-                gsap.to({val:0}, {
-                    val: score,
-                    duration: 2,
-                    onUpdate: function() {
-                        scoreDisplay.innerText = Math.floor(this.targets()[0].val).toLocaleString();
-                    },
-                    onComplete: function() {
-                        calculatePrice(score);
-                        status.innerText = "Audit Complete";
-                    }
+                gsap.to({v:0}, {
+                    v: score, duration: 2, 
+                    onUpdate: function() { document.getElementById('score-val').innerText = Math.floor(this.targets()[0].v); },
+                    onComplete: () => { finalizeValuation(score); }
                 });
+                
+                w.terminate();
+                btn.disabled = false; btn.innerText = "RUN AI ANALYSIS";
+                loadText.innerText = "System Idle"; loadText.classList.remove('text-red-500');
             };
         }
 
-        function calculatePrice(score) {
-            const screen = parseFloat(document.getElementById('screen').value);
-            const battery = parseInt(document.getElementById('battery').value) || 80;
-            const extras = parseInt(document.getElementById('extras').value);
-            const resBox = document.getElementById('result-box');
-            const priceText = document.getElementById('price-result');
+        function finalizeValuation(score) {
+            const adj1 = parseFloat(document.getElementById('adj1').value);
+            const adj2 = parseFloat(document.getElementById('adj2').value);
+            const config = configs[currentMode];
+            
+            let finalPrice = (config.base + (score * config.multiplier)) * adj1;
+            
+            // Subtle logic adjustment for battery/ram
+            if(currentMode === 'phone') finalPrice *= (adj2/100);
+            if(currentMode === 'laptop') finalPrice += (adj2 * 10);
 
-            // معادلة السعر التقديرية (بناءً على السكور والبيانات)
-            // لنفترض أن السعر الأساسي هو سكور المعالج مقسوماً على 50
-            let basePrice = score / 50;
+            document.getElementById('valuation-id').innerText = "ID: TITAN-" + Math.random().toString(36).substr(2, 9).toUpperCase();
             
-            // تعديل السعر حسب البطارية والشاشة
-            let finalPrice = (basePrice * (battery / 100) * screen) + extras;
-            
-            // حدود منطقية للسعر
-            if(finalPrice < 50) finalPrice = score / 100;
-
-            priceText.innerText = "$" + Math.floor(finalPrice).toLocaleString();
-            
-            resBox.classList.remove('hidden');
-            gsap.to(resBox, { opacity: 1, y: -10, duration: 1 });
+            gsap.to({v:0}, {
+                v: finalPrice, duration: 1.5,
+                onUpdate: function() { document.getElementById('final-price').innerText = "$" + Math.floor(this.targets()[0].v).toLocaleString(); }
+            });
         }
     </script>
 </body>
