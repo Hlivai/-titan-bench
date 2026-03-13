@@ -26,7 +26,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "TITAN Hardware Appraiser",
-      "url": "https://titan-v9.vercel.app/",
+      "url": "https://titan-v6.vercel.app/",
       "description": "SaaS platform for checking PC bottlenecks, estimating phone battery degradation, and benchmarking systems for resale value.",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "All"
@@ -134,7 +134,7 @@
         <div class="flex flex-col xl:flex-row justify-between items-center gap-8">
             <div class="text-center xl:text-left">
                 <h1 class="text-5xl md:text-6xl font-black tracking-tighter uppercase italic leading-none text-white drop-shadow-2xl">
-                    Titan <span class="text-cyan-400">v9.0</span> <span class="text-violet-400 text-4xl">PRO</span>
+                    Titan <span class="text-cyan-400">v6.0</span> <span class="text-violet-400 text-4xl">PRO</span>
                 </h1>
                 <p class="text-[10px] md:text-xs text-cyan-300 font-bold uppercase tracking-[0.5em] mt-3">The Ad-Ready Hardware Ecosystem</p>
             </div>
@@ -280,7 +280,7 @@
                 <div class="flex justify-between items-center mb-6">
                     <div class="text-[10px] text-slate-400 uppercase tracking-[0.3em] font-black flex items-center gap-2">
                         <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse" id="live-indicator"></span>
-                        TITAN Reality Engine v9
+                        TITAN Reality Engine v6
                     </div>
                     <div class="text-[9px] font-mono text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded border border-cyan-400/20">AWAITING_CMD</div>
                 </div>
@@ -313,7 +313,7 @@
                     <div id="price-val" class="price-text text-7xl md:text-9xl font-black tracking-tighter leading-none">0.00</div>
                 </div>
                 
-                <!-- PC BOTTLENECK ALERT UI (From V8) -->
+                <!-- PC BOTTLENECK ALERT UI -->
                 <div id="bottleneck-warning" class="bottleneck-alert mt-6 w-full text-center">
                     <div class="flex items-center justify-center gap-3 mb-2">
                         <span class="text-2xl">⚠️</span>
@@ -324,7 +324,7 @@
                     </p>
                 </div>
 
-                <!-- NEW: PHONE EOL & BATTERY DEGRADATION ALERT (V9 Feature) -->
+                <!-- PHONE EOL & BATTERY DEGRADATION ALERT -->
                 <div id="phone-obsolete-warning" class="phone-obsolete-alert mt-6 w-full text-center">
                     <div class="flex items-center justify-center gap-3 mb-2">
                         <span class="text-2xl">🔋</span>
@@ -351,7 +351,7 @@
         <div class="border-t border-slate-800 pt-12">
             <h2 class="text-3xl font-black uppercase tracking-widest text-white mb-6">Understanding The TITAN Algorithm</h2>
             <p class="text-slate-400 text-sm leading-loose max-w-4xl mb-12">
-                TITAN v9.0 is not just a standard pricing calculator. It is a comprehensive SaaS platform built for gamers, tech enthusiasts, and hardware resellers. Whether you are trying to find the resale value of an old iPhone, checking if your Custom PC has a CPU bottleneck, or analyzing battery degradation, our 150-million operation web worker ensures extreme accuracy.
+                TITAN v6.0 is not just a standard pricing calculator. It is a comprehensive SaaS platform built for gamers, tech enthusiasts, and hardware resellers. Whether you are trying to find the resale value of an old iPhone, checking if your Custom PC has a CPU bottleneck, or analyzing battery degradation, our 150-million operation web worker ensures extreme accuracy.
             </p>
             
             <div class="grid md:grid-cols-2 gap-8">
@@ -396,7 +396,7 @@
     <footer class="w-full border-t border-slate-800 bg-[#02040a] py-12">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="text-left">
-                <div class="text-2xl font-black tracking-tighter uppercase italic text-white">Titan <span class="text-cyan-400">v9.0</span></div>
+                <div class="text-2xl font-black tracking-tighter uppercase italic text-white">Titan <span class="text-cyan-400">v6.0</span></div>
                 <p class="text-[10px] text-slate-500 tracking-[0.2em] mt-1">© 2024-2026 TITAN Analytics. All rights reserved.</p>
             </div>
             
@@ -564,7 +564,6 @@
         };
 
         // --- 3. THE NEW PHONE OBSOLESCENCE DICTIONARY ---
-        // Maps phone models to their Release Year to calculate EOL and Battery Degradation
         const PHONE_RELEASE_YEARS = {
             "17 Pro Max (Est)": 2025, "16 Pro Max 1TB": 2024, "16 Pro Max Base": 2024, "16 Pro": 2024, "16 Plus": 2024, "16 Base": 2024,
             "15 Pro Max": 2023, "15 Pro": 2023, "15 Plus": 2023, "15 Base": 2023,
@@ -784,7 +783,7 @@
         // --- 7. NEW FEATURE: MOBILE OBSOLESCENCE ENGINE ---
         function checkPhoneObsolescence(phoneModel) {
             const releaseYear = PHONE_RELEASE_YEARS[phoneModel];
-            if(!releaseYear) return; // Skip if year not found
+            if(!releaseYear) return; 
 
             const currentYear = 2026;
             const age = currentYear - releaseYear;
@@ -795,14 +794,12 @@
             const warningGlow = document.getElementById('bg-warning-glow');
 
             if(age >= 5) {
-                // Severe EOL (End of Life)
                 alertTitle.innerText = "OS Obsolescence Detected";
                 alertDesc.innerText = `Device is ${age} years old (Released ${releaseYear}). Major OS updates have ceased. App support dropping. Value heavily penalized.`;
                 alertBox.style.display = 'block';
                 warningGlow.style.opacity = '0.4';
                 addTermLine("CRITICAL: Device has reached End-Of-Life (EOL).", "error");
             } else if (age >= 3) {
-                // Battery Degradation Warning
                 alertTitle.innerText = "Battery Degradation Warning";
                 alertDesc.innerText = `Device is ${age} years old. Expected chemical battery capacity is < 82%. Resale value reflects needed battery replacement.`;
                 alertBox.style.display = 'block';
@@ -830,7 +827,6 @@
                 const sub2 = document.getElementById('sub2-select').value;
                 base = DB[currentMode][brand][sub1][sub2];
 
-                // Trigger New Phone EOL Logic
                 if(currentMode === 'phone') {
                     checkPhoneObsolescence(sub2);
                 }
